@@ -11,8 +11,5 @@ class MedicineDetails:
         self.description = description
         self.medlink = medlink
    
-    def __init__(self) -> None:
-        pass
-
     def printdetails(self):
         print(f'Name: {self.name} \nPrice: {self.price} \nImage Link: {self.imglink} \nContent: {self.content} \nSide Effect: {self.sideeffect} \nManufacturer: {self.manufacturer} \nHow to use: {self.howtouse} \nDescription: {self.description} \nMedicine Link: {self.medlink}')
