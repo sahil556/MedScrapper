@@ -25,12 +25,17 @@ def medicine_from_1mg(request):
         page = browser.new_page()
 
         page.goto('https://www.1mg.com/search/all?name=' + medicine_name)
-
-        page.is_visible('#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV > div:nth-child(2) > div.col-md-9 > div > div:nth-child(2) > div.row.style__grid-container___3OfcL') 
-        html = page.inner_html("#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV > div:nth-child(2) > div.col-md-9 > div > div:nth-child(2) > div.row.style__grid-container___3OfcL")
+        
+        page.is_visible('#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV') 
+        html = page.inner_html("#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV")
         
         soup = BeautifulSoup (html, 'html.parser')
-        links = soup.find_all('a')
+        links = soup.find_all('div',{'class':'product-card-container style__sku-list-container___jSRzr'})
+        if len(links) == 2:
+            links = links[1]
+        else :
+            links = links[0]
+        links = links.find_all('a')
      
         details_link = []
         for link in links:
@@ -39,9 +44,10 @@ def medicine_from_1mg(request):
         
         
         
-        # print(details_link)
+        print(details_link)
         for link in details_link :
             i = i+1
+            print(link)
             medi = []
             medicine  = Medicine()
             medicine.medlink = link
@@ -50,8 +56,15 @@ def medicine_from_1mg(request):
             html = page.inner_html('body')
             
             soup = BeautifulSoup(html,'html.parser')
-            title = soup.find('h1', {'class' : 'DrugHeader__title-content___2ZaPo'}).getText()
-            
+            title = soup.find('h1', {'class' : 'DrugHeader__title-content___2ZaPo'})
+            if title :
+                title = title.getText()
+            else : 
+                title = soup.find('h1', {'class' : 'ProductTitle__product-title___3QMYH'})
+                if title :
+                    title = title.getText()
+                else :
+                    title = "Not Retrived"
         
             medicine.name = title
             description = soup.find(id='overview').find('div',{'class':'DrugOverview__content___22ZBX'}).getText()
@@ -107,6 +120,9 @@ def medicine_from_1mg(request):
             side_effect = soup.find(id="side_effects")
             if side_effect :
                 side_effect = side_effect.find('div',{'class':'DrugOverview__list-container___2eAr6 DrugOverview__content___22ZBX'}).getText()
+                side_effect = side_effect.find('div',{'class':'DrugOverview__list-container___2eAr6 DrugOverview__content___22ZBX'})
+                if side_effect :
+                    side_effect = side_effect.getText()
         
             medicine.sideeffect = side_effect
             medicine_details_for_save.append(medicine)
