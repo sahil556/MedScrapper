@@ -119,7 +119,6 @@ def medicine_from_1mg(request):
             medicine.howtouse = how_to_use
             side_effect = soup.find(id="side_effects")
             if side_effect :
-                side_effect = side_effect.find('div',{'class':'DrugOverview__list-container___2eAr6 DrugOverview__content___22ZBX'}).getText()
                 side_effect = side_effect.find('div',{'class':'DrugOverview__list-container___2eAr6 DrugOverview__content___22ZBX'})
                 if side_effect :
                     side_effect = side_effect.getText()
