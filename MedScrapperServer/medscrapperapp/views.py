@@ -4,7 +4,9 @@ import json
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import re
-from medscrapperapp.medicine_class import MedicineDetails
+from django.forms.models import model_to_dict
+from medscrapperapp.models import Medicine
+import json 
 # Create your views here.
 
 
@@ -14,16 +16,20 @@ def home(request):
 
 
 def medicine_from_1mg(request):
-    medicine_name = json.loads(request.body)['name']
+    medicine_name = json.loads(request.body)['name']    
     return HttpResponse("1mg link")
 
 def medicine_from_pharmeasy(request):
     print("Requesting for pharmeasy medicine...")
+    # medicine_name = request.POST['name']
+
     medicine_name = json.loads(request.body)['name']
+ 
+    available_searched_medicine_model = []
     with sync_playwright () as p: 
 
         browser = p.chromium.launch(headless=False)
-
+        details_link =[]
         page = browser.new_page()
         # pharmeasy scrapping starts from here
         hiturl = 'https://pharmeasy.in/search/all?name=' + medicine_name
@@ -33,14 +39,15 @@ def medicine_from_pharmeasy(request):
         soup = BeautifulSoup (html, 'html.parser')
         links = soup.find_all('a')
    
-        details_link =[]
-    
+       
+        
         for link in links:
             details_link.append("https://pharmeasy.in/" + link['href'])
         
     # print(details_link)
     
     # hitting first full detail link
+        i = 0
         available_searched_medicine_pharmeasy = []
         for link in details_link:
             page.goto(link)
@@ -91,15 +98,23 @@ def medicine_from_pharmeasy(request):
         
         
 
-            medicine = MedicineDetails(medicine_name, price, imgurl, saltsynonyms, sideeffect, manufacturer, howtouse, description, medicine_link)
-            available_searched_medicine_pharmeasy.append(medicine)
+            medicine = Medicine(name=medicine_name, price = price, imglink = imgurl, content = saltsynonyms, sideeffect = sideeffect, manufacturer = manufacturer, howtouse = howtouse,description = description, medlink = medicine_link)
+            available_searched_medicine_pharmeasy.append(model_to_dict(medicine))
+            available_searched_medicine_model.append(medicine)
+            if i == 0:
+                break
 
-        
-    return HttpResponse("Successfully Scrapped :")
+    for obj in available_searched_medicine_model:
+        obj.save()
+
+    medicine_json = json.dumps(available_searched_medicine_pharmeasy)
+    return HttpResponse(medicine_json, content_type='application/json')
 
 def medicine_from_netmeds(request):
     print("Requesting medicine from netmeds")
     medicine_name = json.loads(request.body)['name']
+    available_searched_medicine_model = []
+
     with sync_playwright () as p: 
 
         browser = p.chromium.launch(headless=False)
@@ -123,8 +138,9 @@ def medicine_from_netmeds(request):
         
         # hitting individual url of netmeds 
 
-        available_searched_medicine_netmeds=[]
-    
+        itr = 0
+        terminate = 0
+        available_searched_medicine_netmeds = []
         for link in details_link:
             page.goto(link)
             page.is_visible("#maincontent > div.content-section > div.product-top > div.product-right-block > div.product-detail > h1")
@@ -142,13 +158,22 @@ def medicine_from_netmeds(request):
             if len(desc_node) > 0:
                 description = desc_node[0].getText()[12:]
 
-            side_effect_node = soup.find(string = re.compile("^SIDE EFFECTS"))
-            if side_effect_node is not None:
-                side_effect_node = side_effect_node.parent.parent.find_all('li')
+            side_effect_node = soup.find(string = re.compile("^SIDE EFFECTS")).parent.parent
             side_effect = ""
-            for sideeffect in side_effect_node:
-                side_effect += sideeffect.getText() + ' '
-            
+            if side_effect_node is not None:
+                node = side_effect_node.find(string = re.compile("COMMON")).parent.parent
+                print(node.next_sibling)
+                if node is not None:
+                    temp  = node.find_all('li')
+                    for index in temp:
+                        side_effect += index.getText() + ", "
+                node = side_effect_node.find(string = re.compile("UNCOMMON")).parent.parent
+                print(node.next_sibling)
+                if node is not None:
+                    temp  = node.find_all('li')
+                    for index in temp:
+                        side_effect += index.getText() + ", "
+           
             howtouse=soup.find(string= re.compile('^USES OF'))
             if howtouse is not None:
                 howtouse = howtouse.parent.parent.find('ul').get_text()
@@ -166,10 +191,16 @@ def medicine_from_netmeds(request):
             if found :
                 saltsynonyms = med_table[index+2].string
 
-            medicine = MedicineDetails(medicine_name, price, imgurl, saltsynonyms, side_effect, manufacturer, howtouse, description, medicine_link)
-            available_searched_medicine_netmeds.append(medicine)
+            medicine = Medicine(name=medicine_name, price = price, imglink = imgurl, content = saltsynonyms, sideeffect = side_effect, manufacturer = manufacturer, howtouse = howtouse,description = description, medlink = medicine_link)
+            available_searched_medicine_netmeds.append(model_to_dict(medicine))
+            available_searched_medicine_model.append(medicine)
 
+            if itr == terminate:
+                break
         print("printing details --> netmeds")
-        for obj in available_searched_medicine_netmeds:
-            obj.printdetails()
-    return HttpResponse("netmeds link")
+
+    for obj in available_searched_medicine_model:
+        obj.save()
+
+    medicine_json = json.dumps(available_searched_medicine_netmeds)
+    return HttpResponse(medicine_json, content_type='application/json')
