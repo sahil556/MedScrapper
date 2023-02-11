@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('netmeds', views.medicine_from_netmeds),
     path('pharmeasy', views.medicine_from_pharmeasy),
+    path('search', views.searchsuggestions),
 ]
