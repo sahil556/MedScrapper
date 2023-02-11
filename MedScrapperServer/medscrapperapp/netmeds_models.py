@@ -11,3 +11,5 @@ class MedicineNetMeds(models.Model):
     howtouse = models.CharField(blank = True, null =True, max_length = 2000)
     description = models.CharField(blank = True, null =True, max_length = 3000)
     medlink = models.CharField(blank = True, null =True, max_length = 1000)
+
+    

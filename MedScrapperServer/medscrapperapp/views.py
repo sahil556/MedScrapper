@@ -25,7 +25,7 @@ def searchsuggestions(request):
     print(results)
     return HttpResponse("json")
 
-terminate = 20
+terminate = 10
 def medicine_from_1mg(request):
     medicine_name = json.loads(request.body)['name']
     medicine_details = []
@@ -230,7 +230,7 @@ def medicine_from_pharmeasy(request):
 
         
         
-
+            
             medicine = MedicinePharmEasy(name=medicine_name, price = price, imglink = imgurl, content = saltsynonyms, sideeffect = sideeffect, manufacturer = manufacturer, howtouse = howtouse,description = description, medlink = medicine_link)
             available_searched_medicine_pharmeasy.append(model_to_dict(medicine))
             available_searched_medicine_model.append(medicine)
@@ -285,7 +285,7 @@ def medicine_from_netmeds(request):
             page.is_visible("#maincontent > div.content-section > div.product-top > div.product-right-block > div.product-detail > h1")
             html = page.content()
             soup = BeautifulSoup (html, 'html.parser')
-
+            medicine = MedicineNetMeds()
             medicine_name = soup.find('h1',{'class':'black-txt'}).get_text().lower()
             price = soup.find('span',class_ = 'final-price').get_text()
             imgurl = soup.find('figure',{'class':'figure figure-m-0 largeimage'}).find_all('img')[0]['src']
@@ -342,6 +342,7 @@ def medicine_from_netmeds(request):
                 saltsynonyms = med_table[index+2].string
 
             medicine = MedicineNetMeds(name=medicine_name, price = price, imglink = imgurl, content = saltsynonyms, sideeffect = side_effect, manufacturer = manufacturer, howtouse = howtouse,description = description, medlink = medicine_link)
+            
             available_searched_medicine_netmeds.append(model_to_dict(medicine))
             available_searched_medicine_model.append(medicine)
 
