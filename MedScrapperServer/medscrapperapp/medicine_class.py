@@ -1,18 +1,13 @@
+from django.db import models
 
-class MedicineDetails:
-    def __init__(self, name, price, imglink, content, sideeffect, manufacturer, howtouse, description, medlink):
-        self.name = name
-        self.price = price
-        self.imglink = imglink
-        self.content = content
-        self.sideeffect = sideeffect
-        self.manufacturer = manufacturer
-        self.howtouse = howtouse
-        self.description = description
-        self.medlink = medlink
-   
-    def __init__(self) -> None:
-        pass
-
-    def printdetails(self):
-        print(f'Name: {self.name} \nPrice: {self.price} \nImage Link: {self.imglink} \nContent: {self.content} \nSide Effect: {self.sideeffect} \nManufacturer: {self.manufacturer} \nHow to use: {self.howtouse} \nDescription: {self.description} \nMedicine Link: {self.medlink}')
+# Create your models here.
+class Medicine(models.Model):
+    name = models.CharField(blank = True, null =True, max_length = 100)
+    price = models.CharField(blank = True, null =True, max_length = 30)
+    imglink = models.CharField(blank = True, null =True, max_length = 1000)
+    content = models.CharField(blank = True, null =True, max_length = 300)
+    sideeffect = models.CharField(blank = True, null =True, max_length = 500)
+    manufacturer = models.CharField(blank = True, null =True, max_length = 50)
+    howtouse = models.CharField(blank = True, null =True, max_length = 2000)
+    description = models.CharField(blank = True, null =True, max_length = 3000)
+    medlink = models.CharField(blank = True, null =True, max_length = 500)
