@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
+import MedicineState from '../context/medicinecontext'
+import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
 export default function Search() {
+    const [responseStatus, setResponseStatus] = useState(false)
+
+    const HandleInput = (e)=>{
+        console.log(e.target.value)
+        MedicineState(e.target.value).then((data)=>{
+            console.log(data)
+        })
+    }
+    
     return (
         <>
-            <div>
+       
+        
+            {/* <div>
                 <h1>pharmeasy scrapping request : </h1>
                 <form action="http://127.0.0.1:8000/pharmeasy" method="post">
-                    <input type="text" name="name" placeholder="Enter medicine name" />
+                    <input autoComplete='off' type="text" onChange={HandleInput} name="name" placeholder="Enter medicine name" />
                     <button type="submit">submit</button>
                 </form>
                 <br /><br />
@@ -17,7 +30,7 @@ export default function Search() {
                     <input type="text" name="name" placeholder="Enter medicine name" />
                     <button type="submit">submit</button>
                 </form>
-            </div>
+            </div> */}
         </>
     )
 }
