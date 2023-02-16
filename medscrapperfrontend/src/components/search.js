@@ -1,36 +1,91 @@
-import React, { useState } from 'react'
-import MedicineState from '../context/medicinecontext'
+import React, { useEffect, useState } from 'react'
+import MedicineState, {MedicineInfo} from '../context/medicinecontext'
+import Spinner from './Spinner'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
-export default function Search() {
-    const [responseStatus, setResponseStatus] = useState(false)
+function Search(props) {
+    const [items, setItems] = useState([])
+    const [loading, setLoading] = useState(false)
+    
+    let HandleInput = (name) => {
+        
+        if (name.length == 1) {
+            setLoading(true)
+            MedicineState(name).then((data) => {
+               return JSON.parse(data) 
+            }).then(data => {
+                for(let i = 0; i < data.length; i++) {
+                     data[i].id = i
+                }
+                setLoading(false)
+                setItems(data); console.log(data) }) 
+           
+        }
+    }
 
-    const HandleInput = (e)=>{
-        console.log(e.target.value)
-        MedicineState(e.target.value).then((data)=>{
-            console.log(data)
-        })
+    const handleOnSearch = (string, results) => {
+        // onSearch will have as the first callback parameter
+        // the string searched and for the second the results.
+        // console.log(string)
+        // if (string.length == 1) {
+        //     MedicineState(string).then((data) => {
+        //         items = data
+        //         console.log(items)
+        //     })
+        // }
+        // console.log(string, results)
+    }
+
+    const handleOnHover = (result) => {
+        // the item hovered
+        console.log(result)
+    }
+
+    const handleOnSelect = (item) => {
+        console.log(item.name.length)
+        if (item.name.length > 1) {
+            MedicineInfo(item.name, 'pharmeasy').then((data) => {
+              return JSON.parse(data)
+            }).then(data => {
+              props.setMedicines(data)
+            })
+          }
+        console.log(item)
+    }
+
+    const handleOnFocus = () => {
+        console.log('Focused')
+    }
+
+    const formatResult = (item) => {
+        return (
+            <>
+                <span key={item.id} style={{ textAlign: 'left'}}>{item.name}</span>
+            </>
+        )
     }
     
     return (
         <>
-       
-        
-            {/* <div>
-                <h1>pharmeasy scrapping request : </h1>
-                <form action="http://127.0.0.1:8000/pharmeasy" method="post">
-                    <input autoComplete='off' type="text" onChange={HandleInput} name="name" placeholder="Enter medicine name" />
-                    <button type="submit">submit</button>
-                </form>
-                <br /><br />
-                <hr />
-                <br />
-                <h1>netmeds scrapping request : </h1>
-                <form action="http://127.0.0.1:8000/netmeds" method="post">
-                    <input type="text" name="name" placeholder="Enter medicine name" />
-                    <button type="submit">submit</button>
-                </form>
-            </div> */}
+        <div className="App d-flex p-4 justify-content-center" >
+            {/* <header className="App-header"> */}
+                <div style={{ width: 400 }} >
+                    <ReactSearchAutocomplete
+                        items={items}
+                        onSearch={HandleInput}
+                        // onHover={handleOnHover}
+                        onSelect={handleOnSelect}
+                        // onFocus={handleOnFocus}
+                        autoFocus
+                        formatResult={formatResult}
+                    />
+                </div>
+            {/* </header> */}
+            
+        </div>
+        {loading && <Spinner />}
         </>
     )
 }
+
+export default Search

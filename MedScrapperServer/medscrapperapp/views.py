@@ -200,13 +200,14 @@ def medicine_from_pharmeasy(request):
     available_searched_medicine_pharmeasy = []
     available_searched_medicine_model = []
     try :
+        print(undef)
         with sync_playwright () as p: 
 
             browser = p.chromium.launch(headless=False)
             details_link =[]
             page = browser.new_page()
             # pharmeasy scrapping starts from here
-            hiturl = 'https://kkkkkpharmeasy.in/search/all?name=' + medicine_name
+            hiturl = 'https://pharmeasy.in/search/all?name=' + medicine_name
             page.goto(hiturl)
             page.is_visible('.LHS_container__mrQkM')
             html = page.inner_html('.LHS_container__mrQkM')

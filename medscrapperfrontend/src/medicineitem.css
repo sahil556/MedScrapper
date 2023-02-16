@@ -1,0 +1,706 @@
+.ProductCard_medicineUnitContainer__cBkHl {
+    --pdpDiscountImgUrl: url(https://assets.pharmeasy.in/web-assets/_next/icons/pdp-discount.png);
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%
+}
+
+.ProductCard_medicineUnitContainer__cBkHl img {
+    font-size: 8px
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_medicineUnitContainer__cBkHl {
+        flex-direction:column;
+        margin-bottom: 0
+    }
+}
+
+.ProductCard_medicineUnitWrapper__eoLpy {
+    background-color: #fff;
+    color: #4f585e;
+    display: flex;
+    min-height: 145px;
+    width: 100%
+}
+
+.ProductCard_medicineUnitWrapper__eoLpy:active,.ProductCard_medicineUnitWrapper__eoLpy:focus,.ProductCard_medicineUnitWrapper__eoLpy:hover {
+    color: #4f585e
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_medicineUnitWrapper__eoLpy {
+        border:0;
+        border-radius: 0;
+        min-height: 0;
+        padding: 0 15px
+    }
+}
+
+.ProductCard_defaultWrapper__nxV0R {
+    border: 1px solid #dfe3e6;
+    border-radius: 6px;
+    display: flex;
+    padding: 20px
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_defaultWrapper__nxV0R {
+        border:none;
+        border-bottom: 1px solid #dfe3e6;
+        border-radius: 0;
+        padding: 15px
+    }
+}
+
+.ProductCard_medicineImgDefault__Q8XbJ {
+    height: 60px;
+    margin-right: 10px;
+    text-align: center;
+    width: 60px
+}
+
+.ProductCard_medicineImgDefault__Q8XbJ img {
+    margin: 0 auto;
+    max-height: 60px;
+    max-width: 60px;
+    vertical-align: middle
+}
+
+.ProductCard_productImage__dq5lq {
+    -o-object-fit: contain;
+    object-fit: contain
+}
+
+.ProductCard_infoContainer__Ro1Gi {
+    display: flex;
+    justify-content: space-between;
+    width: 100%
+}
+
+.ProductCard_medicineUnitContentWrapper__8thFe {
+    flex: 1 1;
+    position: relative;
+    width: 100%
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_medicineUnitContentWrapper__8thFe {
+        width:100%
+    }
+}
+
+.ProductCard_nameAndDeleteIconWrapper__3ffbK {
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    justify-content: space-between;
+    margin-bottom: 5px
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_nameAndDeleteIconWrapper__3ffbK {
+        font-size:16px;
+        margin-bottom: 0
+    }
+}
+
+.ProductCard_nameLogoContainer__lfDsP {
+    display: flex;
+    justify-content: space-between;
+    width: 100%
+}
+
+.ProductCard_medicineName__8Ydfq {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    font-size: 20px;
+    -webkit-line-clamp: 3;
+    margin-bottom: 5px;
+    overflow: hidden
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_medicineName__8Ydfq {
+        font-size:16px
+    }
+}
+
+.ProductCard_brandName__kmcog {
+    color: #8897a2;
+    font-size: 14px
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_brandName__kmcog {
+        font-size:12px
+    }
+}
+
+.ProductCard_iconContainer__UuCQH {
+    display: flex
+}
+
+.ProductCard_newRxRequiredTag__01UpL {
+    display: block;
+    margin-left: 5px;
+    position: relative
+}
+
+.ProductCard_removeFromCartContainer__eoXIh {
+    align-items: center;
+    display: flex
+}
+
+.ProductCard_measurementUnit__hsZ2o {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_measurementUnit__hsZ2o {
+        color:#8897a2;
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 5px;
+        margin-top: 0;
+        text-transform: uppercase
+    }
+}
+
+.ProductCard_productWarningAndCta__kKe3q {
+    align-items: center
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_productWarningAndCta__kKe3q {
+        align-items:flex-start;
+        flex-direction: column
+    }
+}
+
+.ProductCard_ctaInformation__ot9e5 {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 15px
+}
+
+.ProductCard_productWarningAndCtaWithTotal__VoNqu {
+    display: block
+}
+
+.ProductCard_productWarningAndCtaWithTotal__VoNqu .ProductCard_ctaInformation__ot9e5 {
+    width: 100%
+}
+
+.ProductCard_displayBlockOrFlex__PZ7JF {
+    display: flex;
+    align-items: center
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_displayBlockOrFlex__PZ7JF {
+        display:block
+    }
+}
+
+.ProductCard_displayBlock__Bo7tz {
+    display: block
+}
+
+.ProductCard_warningPriceInfo__Dod00 {
+    width: 100%
+}
+
+.ProductCard_priceContainer__dqj7Q {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    display: flex;
+    align-items: center
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_priceContainer__dqj7Q {
+        margin-top:5px
+    }
+}
+
+.ProductCard_ourPrice__yDytt {
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 5px
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_ourPrice__yDytt {
+        font-size:16px
+    }
+}
+
+.ProductCard_priceDiscountWrapper__UbAup {
+    align-items: flex-end;
+    display: inline-flex
+}
+
+.ProductCard_originalMrp__cDqTo {
+    color: #8897a2;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400
+}
+
+.ProductCard_striked__jkSiD {
+    text-decoration: line-through
+}
+
+.ProductCard_discountPrice__ZJ9qb {
+    background-image: var(--pdpDiscountImgUrl);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    margin-left: 5px;
+    min-width: 65px;
+    padding: 5px 20px 5px 5px;
+    text-align: left
+}
+
+.ProductCard_inclusiveText__JVzei {
+    color: #8897a2;
+    font-size: 10px;
+    font-weight: 400
+}
+
+.ProductCard_marginTop__7MdFP {
+    margin-top: 15px
+}
+
+.ProductCard_ctaWithSafety__gX2CF {
+    justify-content: flex-start
+}
+
+.ProductCard_addToCartButton__OXcsK {
+    min-width: 140px
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_addToCartButton__OXcsK {
+        max-width:200px;
+        min-width: 110px
+    }
+}
+
+.ProductCard_atcWithSafety__8E_do {
+    flex: initial;
+    margin-right: 20px
+}
+
+@media (max-width: 1023px) {
+    .ProductCard_atcWithSafety__8E_do {
+        margin-right:15px
+    }
+}
+
+.ProductCard_withoutMargin__kciEN {
+    margin-right: 0;
+    min-width: auto
+}
+
+.ProductCard_greenMedicineType__iQQk3,.ProductCard_redMedicineType__BXetS,.ProductCard_yellowMedicineType__iYsiM {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 4px;
+    position: relative
+}
+
+.ProductCard_yellowMedicineType__iYsiM {
+    color: #dc8a05
+}
+
+.ProductCard_greenMedicineType__iQQk3 {
+    background-color: #10847e;
+    display: inline-block;
+    padding: 5px 15px 5px 10px;
+    color: #fff
+}
+
+.ProductCard_greenMedicineType__iQQk3:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    border-color: transparent #fff;
+    border-style: solid;
+    border-width: 11px 7px 12px 0
+}
+
+.ProductCard_redMedicineType__BXetS {
+    color: #e60d1f
+}
+
+.ProductCard_defaultMedicineType__U8ybp {
+    color: #4f585e
+}
+
+.ProductCard_searchBrandOption___fsEA {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #10847e;
+    margin-top: 15px
+}
+
+.BrandVariantBox_oneVariantContainer____i89 {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    color: #4f585e;
+    display: flex;
+    margin-bottom: 15px;
+    border: 1px solid #dfe3e6;
+    border-radius: 6px
+}
+
+.BrandVariantBox_oneVariantContainer____i89:active,.BrandVariantBox_oneVariantContainer____i89:focus,.BrandVariantBox_oneVariantContainer____i89:hover {
+    color: #4f585e
+}
+
+@media (max-width: 1023px) {
+    .BrandVariantBox_oneVariantContainer____i89 {
+        border-radius:0;
+        margin-bottom: 0;
+        border: 0;
+        border-bottom: 1px solid #dfe3e6
+    }
+}
+
+.BrandVariantBox_detailsContainer__gNwWa {
+    flex: 1 1;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    overflow: hidden
+}
+
+.BrandVariantBox_nameAndBrandWrapper__X1GO0 {
+    flex: 1 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden
+}
+
+.BrandVariantBox_medicineName__HpcTG {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    display: inline-block;
+    color: #4f585e;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%
+}
+
+@media (max-width: 1023px) {
+    .BrandVariantBox_medicineName__HpcTG {
+        font-size:14px
+    }
+}
+
+.BrandVariantBox_medicineName__HpcTG a {
+    text-decoration: none;
+    color: #4f585e
+}
+
+.BrandVariantBox_moleculeSaltContainer__LZsbc {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5
+}
+
+@media (max-width: 1023px) {
+    .BrandVariantBox_moleculeSaltContainer__LZsbc {
+        font-size:12px
+    }
+}
+
+.BrandVariantBox_manufacturerName__mb_S9 {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    color: #10847e;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    padding-left: 10px
+}
+
+@media (max-width: 1023px) {
+    .BrandVariantBox_manufacturerName__mb_S9 {
+        font-size:12px
+    }
+}
+
+.BrandVariantBox_manufacturerName__mb_S9:active,.BrandVariantBox_manufacturerName__mb_S9:hover,.BrandVariantBox_manufacturerName__mb_S9:visited {
+    text-decoration: none;
+    color: #4f585e
+}
+
+.BrandVariantBox_rightIcon__zbuIQ {
+    width: 15px;
+    height: 15px;
+    stroke: #10847e;
+    margin-left: 5px;
+    vertical-align: middle
+}
+
+@media (max-width: 1023px) {
+    .BrandVariantBox_rightIcon__zbuIQ {
+        width:12px;
+        height: 12px
+    }
+}
+
+.BrandVariantBox_brandInfoContainer__X4nLW {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between
+}
+
+@media (max-width: 1023px) {
+    .BrandVariantBox_brandInfoContainer__X4nLW {
+        margin-top:0
+    }
+}
+
+.BrandVariantBox_medicineBrand__wXJPh {
+    font-size: 16px
+}
+
+@media (max-width: 1023px) {
+    .BrandVariantBox_medicineBrand__wXJPh {
+        font-size:12px
+    }
+}
+
+.BrandVariantBox_medicine_image__mpQkI {
+    width: 80px;
+    min-width: 80px;
+    height: 80px;
+    position: relative
+}
+
+@media (max-width: 1023px) {
+    .BrandVariantBox_medicine_image__mpQkI {
+        width:60px;
+        min-width: 60px;
+        height: 60px
+    }
+}
+
+.BrandVariantBox_medicine_image__mpQkI .BrandVariantBox_medicineImg__7IwTk {
+    width: 100%
+}
+
+.BrandVariantBox_addUpdateButtonContainer__FR3T9 {
+    display: inline-block
+}
+
+.BrandVariantBox_productsSearch__bwF5w {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2
+}
+
+.BrandVariantBox_moleculesSearch__mxnCM {
+    white-space: nowrap
+}
+
+.Search_search-bar-division__uj8mW {
+    width: 100%
+}
+
+.Search_searchHeading__DWX9l {
+    color: #4f585e;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+    padding-bottom: 25px;
+    text-align: left;
+    word-wrap: break-word
+}
+
+@media (max-width: 1023px) {
+    .Search_searchHeading__DWX9l {
+        background:#fff;
+        font-size: 16px;
+        padding: 15px
+    }
+}
+
+.Search_searchHeading__DWX9l:empty {
+    display: none
+}
+
+.Search_searchQueryText__BH1sM {
+    font-weight: 700
+}
+
+.Search_medicineLists__hM5Hk {
+    display: inline-block;
+    margin-right: 15px;
+    width: 100%
+}
+
+@media (max-width: 1023px) {
+    .Search_medicineLists__hM5Hk {
+        margin:0;
+        width: 100%
+    }
+}
+
+.Search_validPrescriptionContainer__qBR8Z {
+    display: inline-block;
+    vertical-align: top;
+    width: 30%
+}
+
+.Search_validPrescription__00CNg {
+    background-color: #fff;
+    border: 1px solid #dfe3e6;
+    border-radius: 6px;
+    display: block;
+    display: inline-block;
+    margin: 15px 0;
+    padding: 25px;
+    width: 100%
+}
+
+@media (max-width: 1023px) {
+    .Search_validPrescription__00CNg {
+        display:none
+    }
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionBigger__U7ku4 {
+    display: flex;
+    padding-bottom: 25px;
+    width: 100%
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionBigger__U7ku4 .Search_rxImage__ponEl {
+    height: 24px;
+    width: 24px
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionBigger__U7ku4 .Search_questionValidPrescription__DNfgw {
+    color: #4f585e;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.25;
+    padding-left: 15px;
+    padding-top: 5px;
+    text-align: left
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionBigger__U7ku4 .Search_rhtChevron__M7Fwj {
+    margin-top: 5px
+}
+
+.Search_validPrescription__00CNg .Search_rx-div-smaller__kqyjq {
+    padding-bottom: 0
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionLower__fSb2e {
+    border-top: 1px solid rgba(0,0,0,.2);
+    padding-top: 15px
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionLower__fSb2e .Search_validRxTitle__jVrvo {
+    color: rgba(0,0,0,.7);
+    font-size: 14px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.5;
+    text-align: left
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionLower__fSb2e .Search_validRxParam__AZWAM {
+    display: flex;
+    padding-top: 15px
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionLower__fSb2e .Search_validRxParam__AZWAM .Search_validRxImageContainer__wXgK4,.Search_validPrescription__00CNg .Search_rxDivisionLower__fSb2e .Search_validRxParam__AZWAM .Search_validRxImageContainer__wXgK4 img {
+    height: 35px;
+    width: 35px
+}
+
+.Search_validPrescription__00CNg .Search_rxDivisionLower__fSb2e .Search_validRxText__5Q1lX {
+    color: rgba(0,0,0,.7);
+    font-size: 14px;
+    letter-spacing: .1px;
+    line-height: 1.07;
+    padding-left: 30px;
+    padding-top: 10px;
+    text-align: left;
+    width: calc(100% - 35px)
+}
+
+.Search_call-to-action___g5xX {
+    float: left;
+    position: absolute;
+    right: 35px;
+    top: 70px;
+    width: 16%
+}
+
+.Search_searchWrapper__BHrwV .Search_infiniteScrollContainer__0plvu {
+    display: inline-block;
+    margin-right: 25px;
+    width: 67%
+}
+
+@media (max-width: 1023px) {
+    .Search_searchWrapper__BHrwV .Search_infiniteScrollContainer__0plvu {
+        margin-right:0;
+        width: 100%
+    }
+}
+
+.Search_finishSearchText__zNsJw {
+    padding: 10px;
+    text-align: center
+}
+
+.Search_fullWidthLHS__mteti {
+    flex: 1 1 auto
+}
+
+@media (max-width: 1023px) {
+    .Search_content__Fj6X_ {
+        padding-bottom:76px
+    }
+}
+
+.Search_rhs__AcAlR {
+    position: sticky;
+    top: 145px
+}
+
+.Search_infiniteLoader__fT1GE,.Search_invalidSearch__LcraZ {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    width: 100%
+}
