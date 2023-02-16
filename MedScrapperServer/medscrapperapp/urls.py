@@ -9,4 +9,7 @@ urlpatterns = [
     path('netmeds', views.medicine_from_netmeds),
     path('pharmeasy', views.medicine_from_pharmeasy),
     path('search', views.searchsuggestions),
+    path('addSubscription',views.add_subscription),
+    path('removeSubscription',views.remove_subscription),
+    path('send_price_alert',views.send_price_alerts),
 ]

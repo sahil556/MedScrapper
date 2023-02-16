@@ -8,12 +8,59 @@ import re
 from medscrapperapp.netmeds_models import MedicineNetMeds
 from medscrapperapp.pharmeasy_models import MedicinePharmEasy
 from medscrapperapp.onemg_models import Medicine1mg
+from medscrapperapp.subscription_models import Subscription
+from django.db.models import Q
+from medscrapperapp.price_scrapping import get_price_1mg, get_price_netmeds, get_price_pharmeasy, trim_text
+from medscrapperapp.send_price_alert_email import send_mail
 # Create your views here.
 
 
 
 def home(request):
     return HttpResponse("Welcome to MedScrapper")
+
+
+def add_subscription(request) :
+    details = json.loads(request.body)
+    try :
+        objects = Subscription.objects.filter( Q(email = details['email']) & Q(medicine_name = details['medicine_name']) & Q(website_name = details['website_name']))
+        if objects.count() > 0 :
+            return HttpResponse("Already Exist none")
+        else :
+            Subscription(email = details['email'] , medicine_name = details['medicine_name'] , website_name = details['website_name']).save()
+        return HttpResponse("saved in database")
+    except :
+        return HttpResponse("Some Thing Went Wrong Try again later")
+
+def remove_subscription(request) :
+    details = json.loads(request.body)
+    try :
+        Subscription.objects.filter( Q(email = details['email']) & Q(medicine_name = details['medicine_name']) & Q(website_name = details['website_name'])).delete()
+    except :
+        return HttpResponse("Some Thing Went Wront Try again later")  
+    return HttpResponse("Subscription removed")
+
+def send_price_alerts(request) :
+    subscription_list = Subscription.objects.all()
+    
+    for s in subscription_list :
+        if s.website_name == '1mg' :
+            old_details = Medicine1mg.objects.get(name = s.medicine_name)
+            new_price = get_price_1mg(old_details.medlink)
+            if new_price != float(old_details.price) :
+               send_mail(s.email,old_details,new_price)
+                
+        elif s.website_name == 'netmeds' :
+            old_details = MedicineNetMeds.objects.get(name = s.medicine_name)
+            new_price = trim_text(get_price_netmeds(old_details.medlink))
+            if new_price != trim_text(old_details.price) :
+               send_mail(s.email,old_details,new_price)
+        else :
+            old_details = MedicinePharmEasy.objects.get(name = s.medicine_name)
+            new_price = trim_text(get_price_pharmeasy(old_details.medlink))
+            if new_price != trim_text(old_details.price) :
+               send_mail(s.email,old_details,new_price)
+    return HttpResponse("done")
 
 def searchsuggestions(request):
     medicine_prefix = json.loads(request.body)['name']

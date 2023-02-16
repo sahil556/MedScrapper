@@ -10,7 +10,7 @@ export default function Search() {
         MedicineState(e.target.value).then((data)=>{
             console.log(data)
         })
-    }
+    } 
     
     return (
         <>
