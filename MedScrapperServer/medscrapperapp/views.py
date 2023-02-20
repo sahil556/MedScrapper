@@ -90,6 +90,7 @@ def medicine_from_1mg(request):
     medicine_details = []
     medicine_details_for_save = []
     try :
+        print(undef)
         with sync_playwright () as p:
 
             browser = p.chromium.launch(headless=False)
@@ -391,7 +392,7 @@ def medicine_from_netmeds(request):
     available_searched_medicine_netmeds = []
     try :
         with sync_playwright () as p: 
-
+            print(undef)
             browser = p.chromium.launch(headless=False)
 
             page = browser.new_page()

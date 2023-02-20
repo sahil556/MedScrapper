@@ -8,7 +8,6 @@ function Search(props) {
     const [loading, setLoading] = useState(false)
     
     let HandleInput = (name) => {
-        
         if (name.length == 1) {
             setLoading(true)
             MedicineState(name).then((data) => {
@@ -18,12 +17,13 @@ function Search(props) {
                      data[i].id = i
                 }
                 setLoading(false)
-                setItems(data); console.log(data) }) 
+                setItems(data);  }) 
            
         }
     }
 
     const handleOnSearch = (string, results) => {
+        console.log("seaced")
         // onSearch will have as the first callback parameter
         // the string searched and for the second the results.
         // console.log(string)
@@ -44,10 +44,31 @@ function Search(props) {
     const handleOnSelect = (item) => {
         console.log(item.name.length)
         if (item.name.length > 1) {
-            MedicineInfo(item.name, 'pharmeasy').then((data) => {
-              return JSON.parse(data)
+            let str = "";
+            for(let i=0; i<item.name.length; i++)
+            {
+                if(item.name[i] == ' ')
+                break;
+                str += item.name[i];
+            }
+            console.log(str)
+            MedicineInfo(item.name, 'pharmeasy').then((str) => {
+              return JSON.parse(str)
             }).then(data => {
-              props.setMedicines(data)
+              props.setMedicinespe(data)
+              
+            })
+            MedicineInfo(item.name, '1mg').then((str) => {
+              return JSON.parse(str)
+            }).then(data => {
+              props.setMedicines1mg(data)
+              
+            })
+            MedicineInfo(item.name, 'netmeds').then((str) => {
+              return JSON.parse(str)
+            }).then(data => {
+              props.setMedicinesnm(data)
+              
             })
           }
         console.log(item)
@@ -67,9 +88,9 @@ function Search(props) {
     
     return (
         <>
-        <div className="App d-flex p-4 justify-content-center" >
+        <div className="App d-flex p-4 justify-content-center" style={{position:'relative'}} >
             {/* <header className="App-header"> */}
-                <div style={{ width: 400 }} >
+                <div style={{ width: 400, position:'absolute', zIndex:1}} >
                     <ReactSearchAutocomplete
                         items={items}
                         onSearch={HandleInput}
