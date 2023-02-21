@@ -12,6 +12,7 @@ from medscrapperapp.subscription_models import Subscription
 from django.db.models import Q
 from medscrapperapp.price_scrapping import get_price_1mg, get_price_netmeds, get_price_pharmeasy, trim_text
 from medscrapperapp.send_price_alert_email import send_mail
+from medscrapperapp.Scrapping.onemg import scrap_1mg
 # Create your views here.
 
 
@@ -86,158 +87,8 @@ def searchsuggestions(request):
 
 terminate = 5
 def medicine_from_1mg(request):
-    medicine_name = json.loads(request.body)['name']
-    medicine_details = []
-    medicine_details_for_save = []
-    try :
-        with sync_playwright () as p:
-
-            browser = p.chromium.launch(headless=False)
-            
-            page = browser.new_page()
-            
-            page.goto('https://www.1mg.com/search/all?name=' + medicine_name)
-            
-            page.is_visible('#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV') 
-            html = page.inner_html("#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV")
-            
-            soup = BeautifulSoup (html, 'html.parser')
-            links = soup.find_all('div',{'class':'product-card-container style__sku-list-container___jSRzr'})
-            if len(links) == 2:
-                links = links[1]
-            else :
-                links = links[0]
-            links = links.find_all('a')
-        
-            details_link = []
-            for link in links:
-                details_link.append("https://www.1mg.com" + link['href'])
-            itr = 0
-            
-            for link in details_link :
-                itr = itr +1
-                medi = []
-                medicine  = Medicine1mg()
-                medicine.medlink = link
-                page.goto(link)
-                page.is_visible('#drug_header > div > div')
-                html = page.inner_html('body')
-                
-                soup = BeautifulSoup(html,'html.parser')
-                title = soup.find('h1', {'class' : 'DrugHeader__title-content___2ZaPo'})
-                if title :
-                    title = title.getText()
-                else : 
-                    title = soup.find('h1', {'class' : 'ProductTitle__product-title___3QMYH'})
-                    if title :
-                        title = title.getText()
-                    else :
-                        title = "Not Retrived"
-            
-                medicine.name = title.lower()
-
-                description = soup.find(id='overview').find('div',{'class':'DrugOverview__content___22ZBX'}).getText()
-                
-                medicine.description = description
-                details = soup.find_all('div',{'class':'DrugHeader__meta-value___vqYM0'})
-                
-                manufacturer = details[0].contents[0].getText()
-                medicine.manufacturer = manufacturer
-                components  = ""
-                if len(manufacturer) == 4 :
-                    components = details[2].contents[0].getText()
-                else :
-                    components = details[1].contents[0].getText()
-                medicine.content = components
-                
-                
-                images = soup.find_all('img',{'class':'style__image___Ny-Sa style__loaded___22epL'})
-                images_link = []
-                for img in images : 
-                    images_link.append(img['src'])
-                medicine.imglink = images_link
-                
-                price_text = soup.find_all('div',{'class':'DrugPriceBox__box___LSjIn'})
-                price_text = price_text.__str__() 
-                price = 10000000
-                take_price = 10000000
-                temp_price = ""
-                
-                for text in price_text:
-                    take_price = take_price -1
-                    
-                    if(text == "₹"):
-                        take_price = 9
-                
-                    if(take_price == 0 and not text.isdigit()):
-                        take_price = 1000000000
-
-                        if temp_price != "" and price > float(temp_price) :
-                            price = float(temp_price)
-                        temp_price = ""
-                    if(take_price == 0) :
-                        temp_price = temp_price + text
-                        take_price = 1
-                                    
-                
-                medicine.price = price
-                how_to_use = soup.find(id="how_to_use")
-                if how_to_use :
-                    how_to_use = how_to_use.find('div',{'class':'DrugOverview__content___22ZBX'}).getText()
-            
-                medicine.howtouse = how_to_use
-                side_effect = soup.find(id="side_effects")
-                if side_effect :
-                    side_effect = side_effect.find('div',{'class':'DrugOverview__list-container___2eAr6 DrugOverview__content___22ZBX'})
-                    if side_effect :
-                        side_effect = side_effect.getText()
-            
-                medicine.sideeffect = side_effect
-                medicine_details_for_save.append(medicine)
-                medicine_details.append(model_to_dict(medicine))
-
-                if itr == terminate :
-                    break
-        for obj in medicine_details_for_save :
-            medcheck  = "NULL"
-            try : 
-                medcheck = Medicine1mg.objects.get(name = obj.name)
-            except:
-                print("Added to Database")
-                obj.save()
-    except :
-        try :
-            saltsynonyms = Medicine1mg.objects.get(name = medicine_name).content 
-            print(saltsynonyms)
-            saltsynonyms_temp = saltsynonyms.split('+')
-            saltsynonyms = []
-            for component in saltsynonyms_temp :
-                if component.find('(') != -1 :
-                    saltsynonyms.append(component.split('(')[0])    
-                else :
-                    saltsynonyms.append(component)
-            
-            medicine_dict = {}
-            for singleContent in saltsynonyms :
-                singleContent = singleContent.replace(" ","")
-                print(singleContent)
-                medicinenames = Medicine1mg.objects.filter(content__contains=singleContent).values('name')
-                print(medicinenames)
-                for medicine in medicinenames:
-                    medicine = medicine['name']
-                    if medicine in medicine_dict:
-                        medicine_dict[str(medicine)] = medicine_dict[str(medicine)] + 1
-                    else:
-                        medicine_dict[str(medicine)] = 1
-            sorted_medicine_dict = sorted(medicine_dict.items(), key=lambda x:-x[1])[0:10]
-            for medicine_name in sorted_medicine_dict :
-                medicine_details.append(model_to_dict(Medicine1mg.objects.get(name=medicine_name[0])))
-
-        except :
-            print("exception")
-            return HttpResponse("Invalid Medicine Name")
-
-    return HttpResponse(json.dumps(medicine_details))
+    medicine_name = json.loads(request.body)['name']   
+    return HttpResponse(json.dumps(scrap_1mg(medicine_name)))
 
 def medicine_from_pharmeasy(request):
     print("Requesting for pharmeasy medicine...")
@@ -247,7 +98,6 @@ def medicine_from_pharmeasy(request):
     available_searched_medicine_pharmeasy = []
     available_searched_medicine_model = []
     try :
-        print(undef)
         with sync_playwright () as p: 
 
             browser = p.chromium.launch(headless=False)
