@@ -98,8 +98,8 @@ def medicine_from_pharmeasy(request):
     available_searched_medicine_pharmeasy = []
     available_searched_medicine_model = []
     try :
+        print(undef)
         with sync_playwright () as p: 
-
             browser = p.chromium.launch(headless=False)
             details_link =[]
             page = browser.new_page()
@@ -240,8 +240,8 @@ def medicine_from_netmeds(request):
     available_searched_medicine_model = []
     available_searched_medicine_netmeds = []
     try :
+        print(undef)
         with sync_playwright () as p: 
-            print(undef)
             browser = p.chromium.launch(headless=False)
 
             page = browser.new_page()
