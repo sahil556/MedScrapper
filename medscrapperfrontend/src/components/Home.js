@@ -5,7 +5,7 @@ import MedicineDisplay from './MedicineDisplay'
 import TobeDisplayed from './TobeDisplayed'
 
 
-export default function Home(props) {
+export default function Home() {
   const [medicines1mg, setMedicines1mg] = useState([])
   const [medicinespe, setMedicinespe] = useState([])
   const [medicinesnm, setMedicinesnm] = useState([])
@@ -34,7 +34,8 @@ export default function Home(props) {
 
   }
 
-  let medicine_list_1mg , medicine_list_nm , medicine_list_pe
+  console.log("object")
+  let medicine_list_1mg, medicine_list_nm, medicine_list_pe
   try{
   if (medicines1mg != null ) {
     if(medicines1mg.length > 0 && medicine_list_1mg.length < 1){
@@ -69,7 +70,7 @@ catch(e)
   return (
     <div>
 
-      <Search setProgress = {props.setProgress} setMedicinespe={setMedicinespe} setMedicines1mg={setMedicines1mg} setMedicinesnm={setMedicinesnm} style={{ zIndex: 10 }} />
+      <Search setMedicinespe={setMedicinespe} setMedicines1mg={setMedicines1mg} setMedicinesnm={setMedicinesnm} style={{ zIndex: 10 }} />
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
         Launch demo modal
       </button>

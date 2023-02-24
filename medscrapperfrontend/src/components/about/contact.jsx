@@ -121,6 +121,13 @@ export const Contact = (props) => {
               </p>
             </div>
           </div>
+          <div className="contact-item">
+              <h3>Mentor</h3>
+              <p>
+                
+                Prof. Apurv Mehta
+              </p>
+            </div>
           <div className="col-md-12">
             <div className="row">
               <div className="social">

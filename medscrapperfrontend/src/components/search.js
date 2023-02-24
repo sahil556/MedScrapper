@@ -3,7 +3,7 @@ import MedicineState, {MedicineInfo} from '../context/medicinecontext'
 import Spinner from './Spinner'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
-function Search(props) {
+function Search(props   ) {
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
     
