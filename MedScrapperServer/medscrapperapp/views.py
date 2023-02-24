@@ -85,6 +85,7 @@ def searchsuggestions(request):
     
     return HttpResponse(json.dumps(medicine_name))
 
+undef = 0;
 terminate = 5
 def medicine_from_1mg(request):
     medicine_name = json.loads(request.body)['name']   
@@ -245,7 +246,7 @@ def medicine_from_netmeds(request):
             browser = p.chromium.launch(headless=False)
 
             page = browser.new_page()
-            hiturl = 'https://www.netmeds12.com/catalogsearch/result/' + medicine_name + '/all'
+            hiturl = 'https://www.netmeds.com/catalogsearch/result/' + medicine_name + '/all'
             page.goto(hiturl)
             page.is_visible('.ais-InfiniteHits')
             html = page.inner_html('.ais-InfiniteHits')

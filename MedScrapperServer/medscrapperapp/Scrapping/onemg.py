@@ -3,6 +3,7 @@ from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from medscrapperapp.onemg_models import Medicine1mg
 
+undef = 0
 def scrap_1mg(medicine_name) :
     terminate = 5
     medicine_details = []
@@ -36,7 +37,7 @@ def scrap_1mg(medicine_name) :
                 else :
                     details_link_drugs.append("https://www.1mg.com" + link['href'])
             itr = 0
-            terminate = len(details_link_drugs) + len(details_link_otc)
+            # terminate = len(details_link_drugs) + len(details_link_otc)
             for link in details_link_drugs :
                 itr = itr +1
                 medicine  = Medicine1mg()
@@ -238,7 +239,7 @@ def scrap_1mg(medicine_name) :
                 medicine_details_for_save.append(medicine)
                 medicine_details.append(model_to_dict(medicine))
                 print(itr, " Done" )
-                if itr == terminate :
+                if itr >= terminate :
                     break    
             
         for obj in medicine_details_for_save :

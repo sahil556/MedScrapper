@@ -25,7 +25,7 @@ export default function MedicineDisplay(props) {
                 </div>
                 <div className="mx-5">
                     <div className="row">
-                        <div className="col center btn"> <a href="javascript:void(0);"
+                        <div className="col center btn"> <a href={medlink}
                                 className="btn btn-outline-primary">View Details</a>&nbsp;&nbsp;
                                 <a onClick={()=>{props.Notifyme(props.item)}} href="#"
                                 className="btn btn-outline-danger">Notifyme</a>
