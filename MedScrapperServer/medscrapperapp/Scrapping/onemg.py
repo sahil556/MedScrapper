@@ -75,8 +75,8 @@ def scrap_1mg(medicine_name) :
                 images = soup.find_all('img',{'class':'style__image___Ny-Sa style__loaded___22epL'})
                 images_link = []
                 for img in images : 
-                    images_link.append(img['src'])
-                medicine.imglink = images_link
+                    medicine.imglink = img['src']
+                    break
                 
                 price_text = soup.find_all('div',{'class':'DrugPriceBox__box___LSjIn'})
                 price_text = price_text.__str__() 
@@ -117,7 +117,7 @@ def scrap_1mg(medicine_name) :
                 medicine_details_for_save.append(medicine)
                 medicine_details.append(model_to_dict(medicine))
                 print(itr, " Done" )
-                if itr == terminate :
+                if itr == 5 :
                     break
 
             for link in details_link_otc :
@@ -145,7 +145,8 @@ def scrap_1mg(medicine_name) :
                 
                 
                 for img in images : 
-                    images_link.append(img.find('img')['src'])
+                    images_link = img.find('img')['src']
+                    break
                 medicine.imglink = images_link
                 print("image ,",medicine.imglink)
                 

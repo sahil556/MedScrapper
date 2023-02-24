@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import Search from './Search'
+import Search from './search'
 import { addSubscription} from '../context/medicinecontext'
 import Medicine from './Medicine'
 
