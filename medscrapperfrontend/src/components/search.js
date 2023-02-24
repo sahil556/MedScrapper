@@ -58,18 +58,18 @@ function Search(props) {
               props.setMedicinespe(data)
               
             })
-            MedicineInfo(item.name, '1mg').then((str) => {
-              return JSON.parse(str)
-            }).then(data => {
-              props.setMedicines1mg(data)
+            // MedicineInfo(item.name, '1mg').then((str) => {
+            //   return JSON.parse(str)
+            // }).then(data => {
+            //   props.setMedicines1mg(data)
               
-            })
-            MedicineInfo(item.name, 'netmeds').then((str) => {
-              return JSON.parse(str)
-            }).then(data => {
-              props.setMedicinesnm(data)
+            // })
+            // MedicineInfo(item.name, 'netmeds').then((str) => {
+            //   return JSON.parse(str)
+            // }).then(data => {
+            //   props.setMedicinesnm(data)
               
-            })
+            // })
           }
         console.log(item)
     }

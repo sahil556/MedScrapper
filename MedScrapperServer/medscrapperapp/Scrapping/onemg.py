@@ -8,6 +8,7 @@ def scrap_1mg(medicine_name) :
     medicine_details = []
     medicine_details_for_save = []
     try :
+        print(undef)
         with sync_playwright () as p:
 
             browser = p.chromium.launch(headless=False)
