@@ -12,5 +12,16 @@
     command : pip install playwright
     command : playwright install
     you are good to go
-# execute index.py 
+
+
+-Pip install Django
+-Pip install Django-environ
+-Pip install Psycopg2
+-Pip install Django-cors-headers
+
+Create Environment Variable file in MedServer .env
+And Add credentials like DATABASE_NAME, DATABASE_USER, DATABASE_PASS
+
+-Runserver 
+
 
