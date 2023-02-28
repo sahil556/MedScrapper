@@ -7,7 +7,7 @@
 ```
 virtualenv myEnv
 ```
-# Go to commandpropmt and activate enviroment
+# Go to command prompt and activate enviroment
 ```
  myEnv\Scripts\activate
 ```
