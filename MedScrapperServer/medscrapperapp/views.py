@@ -13,12 +13,20 @@ from django.db.models import Q
 from medscrapperapp.price_scrapping import get_price_1mg, get_price_netmeds, get_price_pharmeasy, trim_text
 from medscrapperapp.send_price_alert_email import send_mail
 from medscrapperapp.Scrapping.onemg import scrap_1mg
+from medscrapperapp.giveuserbyemail import giveuserbyemail
+from medscrapperapp.contentseparator import separatecontentPhameasy
+from medscrapperapp.contentseparator import separatecontent1mg
 # Create your views here.
 
 
 
 def home(request):
     return HttpResponse("Welcome to MedScrapper")
+
+# subscription  of user
+def give_user_by_email(request):
+    email = json.loads(request.body)
+    return  HttpResponse(json.dumps(giveuserbyemail(email)))
 
 
 def add_subscription(request) :
@@ -36,10 +44,10 @@ def add_subscription(request) :
 def remove_subscription(request) :
     details = json.loads(request.body)
     try :
-        Subscription.objects.filter( Q(email = details['email']) & Q(medicine_name = details['medicine_name']) & Q(website_name = details['website_name'])).delete()
+        Subscription.objects.filter( Q(id = details['id'])).delete()
     except :
         return HttpResponse("Some Thing Went Wront Try again later")  
-    return HttpResponse("Subscription removed")
+    return HttpResponse("Subscription Removed Successfully")
 
 def send_price_alerts(request) :
     subscription_list = Subscription.objects.all()
@@ -84,6 +92,35 @@ def searchsuggestions(request):
     print(medicine_name)
     
     return HttpResponse(json.dumps(medicine_name))
+
+def searchsuggestionsbycontent(request):
+    medicine_prefix = json.loads(request.body)['name']
+    print(medicine_prefix)
+    print(type(medicine_prefix))
+    medicine_name = []
+    results = MedicinePharmEasy.objects.filter(content__icontains = medicine_prefix).values('content','id')
+
+    for result in results:
+        listofcontent = separatecontentPhameasy(result)
+        for content in listofcontent:
+            medicine_name.append(content.replace(" ",""))
+        
+    results = MedicineNetMeds.objects.filter(content__icontains = medicine_prefix).values('content','id')
+
+    for result in results:
+        singleContent = result['content']
+        if singleContent != "Not Available":
+            singleContent = singleContent.replace(" ","")
+            medicine_name.append(singleContent)
+
+    results = Medicine1mg.objects.filter(content__icontains = medicine_prefix).values('content','id')
+    for result in results:
+        print(result)
+        listofcontent = separatecontent1mg(result['content'])
+        for content in listofcontent:
+            medicine_name.append(content.replace(" ",""))
+    
+    return HttpResponse(json.dumps(list(set(medicine_name))))
 
 undef = 0;
 terminate = 5
@@ -355,8 +392,6 @@ def medicine_from_netmeds(request):
         # print(inst) 
         try :
             saltsynonyms = MedicineNetMeds.objects.get(name = medicine_name).content 
-           
-            
             singleContent = saltsynonyms
             print(singleContent)
             medicine_dict = {} 
