@@ -2,7 +2,7 @@ import React from "react";
 
 export const AboutCompo = (props) => {
   return (
-    <div id="about">
+    <div id="about" className="mt-5">
       <div className="container">
         <div className="row">
           <div className="col-xs-12 col-md-6">
