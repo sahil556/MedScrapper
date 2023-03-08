@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react'
 import Search from './Search'
 import { addSubscription } from '../context/medicinecontext'
 import MedicineDisplay from './MedicineDisplay'
+import TobeDisplayed from './TobeDisplayed'
+
 
 export default function Home() {
   const [medicines1mg, setMedicines1mg] = useState([])
@@ -22,10 +24,9 @@ export default function Home() {
     console.log(subscription.email, subscription.medicine_name, subscription.website_name)
     console.log(subscription)
     addSubscription(subscription)
-
-    // alert("Wrong email address")
     setSubsciption({ medicine_name: e.name, email: e.email, website_name: e.website_name });
     refClose.current.click();
+    alert("Subscription successful !")
   }
 
   const onChange = (e) => {
@@ -33,13 +34,22 @@ export default function Home() {
 
   }
 
+  console.log("object")
   let medicine_list_1mg, medicine_list_nm, medicine_list_pe
-  if (medicines1mg !== null && medicines1mg.length > 0 && medicine_list_1mg.length < 1) {
+  try{
+  if (medicines1mg != null ) {
+    if(medicines1mg.length > 0 && medicine_list_1mg.length < 1){
     medicine_list_1mg = medicines1mg.map((item) => {
       item.website_name = '1mg'
       return <MedicineDisplay key={item.id} item={item} Notifyme={Notifyme} />
     })
   }
+  }
+}
+catch(e)
+{
+  console.log(e)
+}
   if (medicinespe.length > 0) {
     // console.log(medicinespe)
     medicine_list_pe = medicinespe.map((item) => {
@@ -48,24 +58,7 @@ export default function Home() {
     })
   }
 
-  // aa be udadavan achhe 
-  if (medicinespe.length > 0) {
-    // console.log(medicinespe)
-    medicine_list_1mg = medicinespe.map((item) => {
-      item.website_name = 'pharmeasy'
-      return <MedicineDisplay item={item} Notifyme={Notifyme} />
-    })
-  }
-  if (medicinespe.length > 0) {
-    // console.log(medicinespe)
-    medicine_list_nm = medicinespe.map((item) => {
-      item.website_name = 'pharmeasy'
-      return <MedicineDisplay item={item} Notifyme={Notifyme} />
-    })
-  }
-
-  //
-  
+    
   if (medicinesnm.length > 0) {
     medicine_list_nm = medicinesnm.map((item) => {
       item.website_name = 'netmeds'
@@ -118,19 +111,20 @@ export default function Home() {
           <div className='col-4'> */}
         <div className='row'>
         <div className='col-md-4 sm-12'>
-
+          {!medicine_list_pe && <TobeDisplayed/>}
           {medicine_list_pe}
+          
         </div>
 
 
         <div className='col-md-4 sm-12'>
-
+          {!medicine_list_1mg && <TobeDisplayed/>}
           {medicine_list_1mg}
         </div>
 
 
         <div className='col-md-4 sm-12'>
-
+          {!medicine_list_nm && <TobeDisplayed/> }
           {medicine_list_nm}
 
         </div>

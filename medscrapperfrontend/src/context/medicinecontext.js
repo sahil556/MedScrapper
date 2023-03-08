@@ -22,13 +22,16 @@ const MedicineState = async (medicineName) => {
 }
 
 export const MedicineInfo = async (seachquery, site) =>{
+  let search = seachquery.split(' ')
+  let word = search[0]
+  
   let headersList = {
     "Accept": "*/*",
     "Content-Type": "application/json"
    }
    
    let bodyContent = JSON.stringify({
-     "name" : seachquery
+     "name" : word
    });
    
    let response = await fetch("http://127.0.0.1:8000/" + site, { 
