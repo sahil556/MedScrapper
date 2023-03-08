@@ -16,9 +16,21 @@ def scrap_1mg(medicine_name) :
             page = browser.new_page()
             
             page.goto('https://www.1mg.com/search/all?name=' + medicine_name)
-            
-            page.is_visible('#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV') 
-            html = page.inner_html("#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV")
+            html = ""
+            while True :
+                try :
+                    page.is_visible('#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV') 
+                    html = page.inner_html("#category-container > div > div.col-xs-12.col-md-10.col-sm-9.style__search-info-container___3s3zV")
+                    break
+                except :
+                    try : 
+                        page.is_visible("#category-container > div > ul > li.list-suggest")
+                        html = page.inner_html("#category-container > div > ul > li.list-suggest")
+                        soup = BeautifulSoup(html, 'html.parser')
+                        print('https://www.1mg.com' + soup.find('a')['href'])
+                        page.goto('https://www.1mg.com' + soup.find('a')['href'])
+                    except :
+                        return []
             
             soup = BeautifulSoup (html, 'html.parser')
             links = soup.find_all('div',{'class':'product-card-container style__sku-list-container___jSRzr'})
@@ -27,7 +39,7 @@ def scrap_1mg(medicine_name) :
             else :
                 links = links[0]
             links = links.find_all('a')
-        
+            terminate = len(links)
             details_link_drugs = []
             details_link_otc = []
             for link in links:
@@ -118,7 +130,7 @@ def scrap_1mg(medicine_name) :
                 medicine_details_for_save.append(medicine)
                 medicine_details.append(model_to_dict(medicine))
                 print(itr, " Done" )
-                if itr == 5 :
+                if itr == terminate :
                     break
 
             for link in details_link_otc :
@@ -255,7 +267,18 @@ def scrap_1mg(medicine_name) :
         print(inst.args)     # arguments stored in .args
         print(inst) 
         try :
-            saltsynonyms = Medicine1mg.objects.get(name = medicine_name).content 
+            medicine = Medicine1mg.objects.filter(name = medicine_name)
+            print(len(medicine))
+            saltsynonyms = ""
+            if len(medicine) > 0 : 
+                saltsynonyms = medicine[0].content
+            else : 
+                print(medicine_name)
+                medicine = Medicine1mg.objects.filter(name__startswith = medicine_name[0:2])   
+                if(len(medicine) == 0) :
+                    return []
+                saltsynonyms = medicine[0].content    
+            
             print(saltsynonyms)
             saltsynonyms_temp = saltsynonyms.split('+')
             saltsynonyms = []
@@ -281,8 +304,12 @@ def scrap_1mg(medicine_name) :
             for medicine_name in sorted_medicine_dict :
                 medicine_details.append(model_to_dict(Medicine1mg.objects.get(name=medicine_name[0])))
 
-        except :
-            return "Some thing went wrong try again later"
+        except Exception as inst:
+            print(type(inst))    # the exception instance
+            print(inst.args)     # arguments stored in .args
+            print(inst) 
+
+            return medicine_details
         
     return medicine_details
   

@@ -12,4 +12,5 @@ urlpatterns = [
     path('addSubscription',views.add_subscription),
     path('removeSubscription',views.remove_subscription),
     path('send_price_alert',views.send_price_alerts),
+    path('findbymedicinename',views.findbymedicinename)
 ]
