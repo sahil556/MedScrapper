@@ -35,6 +35,22 @@ body{
   background: #fff
 }
 
+.notify-badge{
+  position: absolute;
+  background: rgba(0,0,255,1);
+  height:2rem;
+  top: -0.2rem;
+  left:1.5rem;
+  z-index: 1;
+  width:2rem;
+  text-align: center;
+  line-height: 2rem;;
+  font-size: 1rem;
+  border-radius: 50%;
+  color:white;
+  border:1px solid blue;
+}
+
 .product-content .product-deatil h5 a {
   color: #2f383d;
   font-size: 15px;
@@ -60,7 +76,7 @@ body{
   right: 10px;
   text-align: center;
   top: 10px;
-  width: 50px
+  width: 100px
 }
 
 .product-content .product-deatil span.sale {

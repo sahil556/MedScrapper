@@ -22,8 +22,7 @@ const MedicineState = async (medicineName) => {
 }
 
 export const MedicineInfo = async (seachquery, site) =>{
-  let search = seachquery.split(' ')
-  let word = search[0]
+ 
   
   let headersList = {
     "Accept": "*/*",
@@ -31,7 +30,7 @@ export const MedicineInfo = async (seachquery, site) =>{
    }
    
    let bodyContent = JSON.stringify({
-     "name" : word
+     "name" : seachquery
    });
    
    let response = await fetch("http://127.0.0.1:8000/" + site, { 
