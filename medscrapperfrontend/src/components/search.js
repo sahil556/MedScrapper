@@ -41,7 +41,7 @@ function Search(props   ) {
         console.log(result)
     }
 
-    const handleOnSelect = (item) => {
+    const handleOnSelect =  (item) => {
         console.log(item.name.length)
         if (item.name.length > 1) {
             let str = "";
@@ -51,25 +51,24 @@ function Search(props   ) {
                 break;
                 str += item.name[i];
             }
-            console.log(str)
-            MedicineInfo(item.name, '1mg').then((str) => {
+            console.log(str )
+             MedicineInfo(item.name, '1mg').then((str) => {
                 return JSON.parse(str)
               }).then(data => {
                 props.setMedicines1mg(data)
-                
               })
             
             MedicineInfo(item.name, 'netmeds').then((str) => {
               return JSON.parse(str)
             }).then(data => {
-              props.setMedicinesnm(data)
+             // props.setMedicinesnm(data)
               
             })
 
-            MedicineInfo(item.name, 'pharmeasy').then((str) => {
+             MedicineInfo(item.name, 'pharmeasy').then((str) => {
                 return JSON.parse(str)
               }).then(data => {
-                props.setMedicinespe(data)
+               // props.setMedicinespe(data)
                 
               })
           }

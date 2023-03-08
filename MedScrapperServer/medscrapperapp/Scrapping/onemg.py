@@ -5,7 +5,7 @@ from medscrapperapp.onemg_models import Medicine1mg
 
 undef = 0
 def scrap_1mg(medicine_name) :
-    terminate = 5
+    terminate = 1
     medicine_details = []
     medicine_details_for_save = []
     try :
@@ -40,7 +40,7 @@ def scrap_1mg(medicine_name) :
             else :
                 links = links[0]
             links = links.find_all('a')
-            terminate = len(links)
+            # terminate = len(links)
             details_link_drugs = []
             details_link_otc = []
             for link in links:
@@ -130,7 +130,7 @@ def scrap_1mg(medicine_name) :
                 medicine.sideeffect = side_effect
                 medicine_details_for_save.append(medicine)
                 medicine_details.append(model_to_dict(medicine))
-                print(itr, " Done" )
+                print(itr, " Done",terminate )
                 if itr == terminate :
                     break
 
@@ -311,7 +311,7 @@ def scrap_1mg(medicine_name) :
             print(inst) 
 
             return medicine_details
-        
+    print(medicine_details)
     return medicine_details
   
 
