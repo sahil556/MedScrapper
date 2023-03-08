@@ -3,11 +3,12 @@ import MedicineState, {MedicineInfo} from '../context/medicinecontext'
 import Spinner from './Spinner'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
-function Search(props   ) {
+function Search(props) {
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
-    
+    const [input, setInput] = useState("");
     let HandleInput = (name) => {
+        setInput(name);
         if (name.length == 1) {
             setLoading(true)
             MedicineState(name).then((data) => {
@@ -22,37 +23,31 @@ function Search(props   ) {
         }
     }
 
-    const handleOnSearch = (string, results) => {
-        console.log("seaced")
-        // onSearch will have as the first callback parameter
-        // the string searched and for the second the results.
-        // console.log(string)
-        // if (string.length == 1) {
-        //     MedicineState(string).then((data) => {
-        //         items = data
-        //         console.log(items)
-        //     })
-        // }
-        // console.log(string, results)
+    const handleOnSearch = () => {
+        console.log(input)
+        handleOnSelect({"name":input})
     }
 
     const handleOnHover = (result) => {
+        
         // the item hovered
         console.log(result)
     }
-
-    const handleOnSelect =  (item) => {
-        console.log(item.name.length)
+    
+    const handleOnSelect = (item) => {
+        console.log(item)
         if (item.name.length > 1) {
-            let str = "";
-            for(let i=0; i<item.name.length; i++)
-            {
-                if(item.name[i] == ' ')
-                break;
-                str += item.name[i];
-            }
-            console.log(str )
-             MedicineInfo(item.name, '1mg').then((str) => {
+        props.setLoadingMedicine(true)
+
+            let str = item.name;
+            // for(let i=0; i<item.name.length; i++)
+            // {
+            //     if(item.name[i] == ' ')
+            //     break;
+            //     str += item.name[i];
+            // }
+            console.log(str)
+            MedicineInfo(item.name, '1mg').then((str) => {
                 return JSON.parse(str)
               }).then(data => {
                 props.setMedicines1mg(data)
@@ -68,12 +63,13 @@ function Search(props   ) {
              MedicineInfo(item.name, 'pharmeasy').then((str) => {
                 return JSON.parse(str)
               }).then(data => {
-               // props.setMedicinespe(data)
+                props.setMedicinespe(data)
+            props.setLoadingMedicine(false)
                 
-              })
+            })
           }
-        console.log(item)
-    }
+          console.log(item)
+        }
 
     const handleOnFocus = () => {
         console.log('Focused')
@@ -89,22 +85,24 @@ function Search(props   ) {
     
     return (
         <>
+        
         <div className="App d-flex p-4 justify-content-center" style={{position:'relative'}} >
             {/* <header className="App-header"> */}
                 <div style={{ width: 400, position:'absolute', zIndex:1}} >
                     <ReactSearchAutocomplete
                         items={items}
-                        onSearch={HandleInput}
-                        // onHover={handleOnHover}
-                        onSelect={handleOnSelect}
-                        // onFocus={handleOnFocus}
+                        onSearch={HandleInput} 
                         autoFocus
                         formatResult={formatResult}
                     />
                 </div>
+                <div style={{ width: 400, position:'absolute', zIndex:1, marginTop:'5px', marginLeft:'500px'}}>
+                    <button className='btn btn-dark' data-toggle="modal" data-target="#exampleModalLong" onClick={handleOnSearch}>search</button>
+                </div>
             {/* </header> */}
             
         </div>
+        
         {loading && <Spinner />}
         </>
     )
