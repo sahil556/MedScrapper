@@ -36,12 +36,10 @@ export default function Home() {
   }
 
   // console.log("object")
-  let medicine_list_1mg , medicine_list_nm, medicine_list_pe
+  let medicine_list_1mg, medicine_list_nm, medicine_list_pe
   try {
     if (medicines1mg != null) {
-      console.log(medicines1mg)
       if (medicines1mg.length > 0 ) {
-        console.log("after condition")
         medicine_list_1mg = medicines1mg.map((item) => {
           item.website_name = '1mg'
           return <MedicineDisplay key={item.id} item={item} Notifyme={Notifyme} />

@@ -24,6 +24,7 @@ function Search(props) {
     }
 
     const handleOnSearch = () => {
+        console.log(input)
         handleOnSelect({"name":input})
     }
 
@@ -34,37 +35,40 @@ function Search(props) {
     }
     
     const handleOnSelect = (item) => {
+        console.log(item)
         if (item.name.length > 1) {
         props.setLoadingMedicine(true)
 
             let str = item.name;
-            // console.log(str)
+            // for(let i=0; i<item.name.length; i++)
+            // {
+            //     if(item.name[i] == ' ')
+            //     break;
+            //     str += item.name[i];
+            // }
+            console.log(str)
             MedicineInfo(item.name, '1mg').then((str) => {
                 return JSON.parse(str)
-            }).then(data => {
-                // console.log(data)
-              props.setMedicines1mg(data)
-              
-            })
+              }).then(data => {
+                props.setMedicines1mg(data)
+              })
             
             MedicineInfo(item.name, 'netmeds').then((str) => {
               return JSON.parse(str)
             }).then(data => {
-                // console.log(data)
-              props.setMedicinesnm(data)
+             // props.setMedicinesnm(data)
               
             })
 
-            MedicineInfo(item.name, 'pharmeasy').then((str) => {
+             MedicineInfo(item.name, 'pharmeasy').then((str) => {
                 return JSON.parse(str)
               }).then(data => {
-                // console.log(data)
                 props.setMedicinespe(data)
             props.setLoadingMedicine(false)
                 
             })
           }
-        //   console.log(item)
+          console.log(item)
         }
 
     const handleOnFocus = () => {

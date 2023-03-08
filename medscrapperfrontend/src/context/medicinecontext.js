@@ -40,6 +40,7 @@ export const MedicineInfo = async (seachquery, site) =>{
    });
    
    let data = await response.text();
+   console.log(data)
    return data;
    
 }

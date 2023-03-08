@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
-import Search from './components/Search';
+import Search from './components/search';
 import ViewSubscription from './components/ViewSubscription';
 import { useState } from 'react';
 import { useRef } from 'react';
