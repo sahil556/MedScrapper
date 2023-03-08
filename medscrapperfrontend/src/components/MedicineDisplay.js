@@ -7,7 +7,7 @@ export default function MedicineDisplay(props) {
     // <div className="col-xs-12 col-md-4 bootstrap snippets bootdeys">
     <div className="product-content product-wrap clearfix">
         <div className="row">
-            <div className="col-md-12 col-sm-12 col-xs-12">
+            <div className="col-md-4 col-sm-12 col-xs-12">
                 <div className="product-image"> <img src={imglink}
                         alt="Medicine Image" className="img-responsive"/> <span className="tag2 hot"> RX </span></div>
             </div>

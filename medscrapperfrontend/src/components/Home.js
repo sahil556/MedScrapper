@@ -9,6 +9,7 @@ export default function Home() {
   const [medicines1mg, setMedicines1mg] = useState([])
   const [medicinespe, setMedicinespe] = useState([])
   const [medicinesnm, setMedicinesnm] = useState([])
+  const [loadingMedicine, setLoadingMedicine] = useState(false)
 
   const ref = useRef(null)
   const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
@@ -34,22 +35,21 @@ export default function Home() {
 
   }
 
-  console.log("object")
+  // console.log("object")
   let medicine_list_1mg, medicine_list_nm, medicine_list_pe
-  try{
-  if (medicines1mg != null ) {
-    if(medicines1mg.length > 0 && medicine_list_1mg.length < 1){
-    medicine_list_1mg = medicines1mg.map((item) => {
-      item.website_name = '1mg'
-      return <MedicineDisplay key={item.id} item={item} Notifyme={Notifyme} />
-    })
+  try {
+    if (medicines1mg != null) {
+      if (medicines1mg.length > 0 && medicine_list_1mg.length < 1) {
+        medicine_list_1mg = medicines1mg.map((item) => {
+          item.website_name = '1mg'
+          return <MedicineDisplay key={item.id} item={item} Notifyme={Notifyme} />
+        })
+      }
+    }
   }
+  catch (e) {
+    console.log(e)
   }
-}
-catch(e)
-{
-  console.log(e)
-}
   if (medicinespe.length > 0) {
     // console.log(medicinespe)
     medicine_list_pe = medicinespe.map((item) => {
@@ -58,7 +58,7 @@ catch(e)
     })
   }
 
-    
+
   if (medicinesnm.length > 0) {
     medicine_list_nm = medicinesnm.map((item) => {
       item.website_name = 'netmeds'
@@ -70,7 +70,8 @@ catch(e)
   return (
     <div>
 
-      <Search setMedicinespe={setMedicinespe} setMedicines1mg={setMedicines1mg} setMedicinesnm={setMedicinesnm} style={{ zIndex: 10 }} />
+      <Search setMedicinespe={setMedicinespe} setMedicines1mg={setMedicines1mg} setMedicinesnm={setMedicinesnm} setLoadingMedicine={setLoadingMedicine} style={{ zIndex: 10 }} />
+
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
         Launch demo modal
       </button>
@@ -86,7 +87,7 @@ catch(e)
               <form className="my-2">
                 <div className="mb-2">
                   <label htmlFor="medicine" className="form-label text-white ">Medicine Name: </label>
-                  <input disabled="true" type="text" className="form-control" id="emedicine" name="emedicine" value={subscription.medicine_name} aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
+                  <input disabled={true} type="text" className="form-control" id="emedicine" name="emedicine" value={subscription.medicine_name} aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
                 </div>
 
                 <div className="mb-2">
@@ -106,32 +107,34 @@ catch(e)
           </div>
         </div>
       </div>
-      <div className='container mt-5'>
-        {/* <div className='row'>
+      {!loadingMedicine &&
+        <div className='container mt-5'>
+          {/* <div className='row'>
           <div className='col-4'> */}
-        <div className='row'>
-        <div className='col-md-4 sm-12'>
-          {!medicine_list_pe && <TobeDisplayed/>}
-          {medicine_list_pe}
-          
+          <div className='row'>
+            
+              {!medicine_list_pe && <TobeDisplayed />}
+              {medicine_list_pe}
+
+           
+
+
+            
+              {!medicine_list_1mg && <TobeDisplayed />}
+              {medicine_list_1mg}
+            
+
+
+           
+              {!medicine_list_nm && <TobeDisplayed />}
+              {medicine_list_nm}
+
+           
+
+          </div>
         </div>
-
-
-        <div className='col-md-4 sm-12'>
-          {!medicine_list_1mg && <TobeDisplayed/>}
-          {medicine_list_1mg}
-        </div>
-
-
-        <div className='col-md-4 sm-12'>
-          {!medicine_list_nm && <TobeDisplayed/> }
-          {medicine_list_nm}
-
-        </div>
-
-      </div>
-    </div>
-         {/*<div className='col-4'>
+      }
+      {/*<div className='col-4'>
           <div className='row'>
 
           </div>
@@ -144,7 +147,7 @@ catch(e)
        
         </div>
       </div> */}
-             
+
     </div >
   )
 }

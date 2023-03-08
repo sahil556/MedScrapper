@@ -224,9 +224,10 @@ def medicine_from_pharmeasy(request):
 
     except :
         try :
-            saltsynonyms = MedicinePharmEasy.objects.get(name = medicine_name).content 
+            saltsynonyms = MedicinePharmEasy.objects.filter(name = medicine_name).content 
             temp = ""
             remove = False
+            # saltsynonym preprocessing
             for char in saltsynonyms :
                 if char == '(' :
                     remove = True
@@ -391,7 +392,7 @@ def medicine_from_netmeds(request):
         # print(inst.args)     # arguments stored in .args
         # print(inst) 
         try :
-            saltsynonyms = MedicineNetMeds.objects.get(name = medicine_name).content 
+            saltsynonyms = MedicineNetMeds.objects.filter(name = medicine_name).content 
             singleContent = saltsynonyms
             print(singleContent)
             medicine_dict = {} 
