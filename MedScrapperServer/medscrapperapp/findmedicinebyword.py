@@ -4,10 +4,11 @@ from medscrapperapp.onemg_models import Medicine1mg
 
 def get_medicine_details(name1,website):
     if website == "onemg" :
-        return Medicine1mg.objects.filter(name__icontains = name1) 
+        data =  Medicine1mg.objects.filter(name__icontains = name1).values("id")
+        return data
     elif website == "netmeds" :
-        return MedicineNetMeds.objects.filter(name__icontains = name1)
-    return MedicinePharmEasy.objects.filter(name__icontains = name1)
+        return MedicineNetMeds.objects.filter(name__icontains = name1).values("id")
+    return MedicinePharmEasy.objects.filter(name__icontains = name1).values("id")
 
 def get_medicine(name,website) :
     n = len(name)
@@ -15,18 +16,22 @@ def get_medicine(name,website) :
     right = n
 
     while left < right :
-        mid = int((left + right)/2)
+        mid = int((left + right+1)/2)
         tempname = name[0:int(mid)]
         result = get_medicine_details(tempname,website)
-        # print(left,right,mid,len(result))
+        print(left,right,mid,len(result))
         if(len(result) >= 1):
-            left = mid+1
+            left = mid
         else :
             right = mid-1
-    print(left,right)
   
     tempname = name[0:int(left)]
-    result = get_medicine_details(tempname,website)
+    if website == "onemg" :
+        result =  Medicine1mg.objects.filter(name__icontains = tempname)
+    elif website == "netmeds" :
+        result = MedicineNetMeds.objects.filter(name__icontains = tempname)
+    else :
+        result = MedicinePharmEasy.objects.filter(name__icontains = tempname)
     print("From Pharmeasy", len(result),result)
     for res in result :
         print(res.name)

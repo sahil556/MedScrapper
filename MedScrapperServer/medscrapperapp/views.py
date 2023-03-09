@@ -20,6 +20,7 @@ from medscrapperapp.giveuserbyemail import giveuserbyemail
 from medscrapperapp.contentseparator import separatecontentPhameasy
 from medscrapperapp.contentseparator import separatecontent1mg
 from medscrapperapp.findcontentbymedicinename import findContentByMedicineName
+from medscrapperapp.getmedicinebycontent import get_medicinebycontent
 # Create your views here.
 
 
@@ -150,4 +151,9 @@ def findbymedicinename(request) :
 
 def contentbymedicinename(request) :
     data = json.loads(request.body)
-    return findContentByMedicineName(data['name'],data['website'])
+    return HttpResponse(json.dumps(findContentByMedicineName(data['name'],data['website'])))
+
+
+def medicinebycontent(request) :
+    data = json.loads(request.body)
+    return HttpResponse(json.dumps(get_medicinebycontent(data['name'],data['website'])))
