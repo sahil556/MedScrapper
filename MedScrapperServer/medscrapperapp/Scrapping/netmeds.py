@@ -15,7 +15,7 @@ def scrap_netmeds(medicine_name) :
             browser = p.chromium.launch(headless=False)
 
             page = browser.new_page()
-            hiturl = 'https://www.netmeds12.com/catalogsearch/result/' + medicine_name + '/all'
+            hiturl = 'https://www.netmeds.com/catalogsearch/result/' + medicine_name + '/all'
             page.goto(hiturl)
             page.is_visible('.ais-InfiniteHits')
             html = page.inner_html('.ais-InfiniteHits')

@@ -16,7 +16,7 @@ def scrap_pharmeasy(medicine_name) :
             details_link =[]
             page = browser.new_page()
             # pharmeasy scrapping starts from here
-            hiturl = 'https://pharmeasy12.in/search/all?name=' + medicine_name
+            hiturl = 'https://pharmeasy.in/search/all?name=' + medicine_name
             page.goto(hiturl)
             page.is_visible('.LHS_container__mrQkM')
             html = page.inner_html('.LHS_container__mrQkM')
@@ -31,7 +31,7 @@ def scrap_pharmeasy(medicine_name) :
 
             itr = 0
             
-            
+             
             for link in details_link:
                 itr = itr +1
                 page.goto(link)
@@ -81,24 +81,29 @@ def scrap_pharmeasy(medicine_name) :
 
             
             
-                
+                print("---------->", medicine_name)
                 medicine = MedicinePharmEasy(name=medicine_name, price = price, imglink = imgurl, content = saltsynonyms, sideeffect = sideeffect, manufacturer = manufacturer, howtouse = howtouse,description = description, medlink = medicine_link)
                 available_searched_medicine_pharmeasy.append(model_to_dict(medicine))
                 available_searched_medicine_model.append(medicine)
                 if itr == terminate:
                     break
 
-        for obj in available_searched_medicine_model:
-            medcheck  = "NULL"
-            try : 
-                medcheck = MedicinePharmEasy.objects.get(name = obj.name)
-            except:
-                print("Added to Database")
-                obj.save()
+        # for obj in available_searched_medicine_model:
+        #     medcheck  = "NULL"
+        #     try : 
+        #         medcheck = MedicinePharmEasy.objects.get(name = obj.name)
+        #     except:
+        #         print("Added to Database")
+        #         obj.save()
 
-    except :
+    except Exception as inst:
+        print(type(inst))    # the exception instance
+        print(inst.args)     # arguments stored in .args
+        print(inst)  
         try :
-            saltsynonyms = MedicinePharmEasy.objects.filter(name = medicine_name).content 
+            print(medicine_name)
+            saltsynonyms = MedicinePharmEasy.objects.get(name = medicine_name).content 
+            print(saltsynonyms)
             temp = ""
             remove = False
             for char in saltsynonyms :
