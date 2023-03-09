@@ -146,4 +146,4 @@ def findbymedicinename(request) :
 
 def contentbymedicinename(request) :
     data = json.loads(request.body)
-    return findContentByMedicineName(data['name'],data['website'])
+    return HttpResponse(json.dumps(findContentByMedicineName(data['name'],data['website'])))
