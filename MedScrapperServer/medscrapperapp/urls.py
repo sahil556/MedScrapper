@@ -15,5 +15,7 @@ urlpatterns = [
     path('findbymedicinename',views.findbymedicinename),
     path('showsubscription',views.give_user_by_email),
     path('searchbycontent', views.searchsuggestionsbycontent),
-    path('getcontentbymedicinename',views.contentbymedicinename)
+    path('getcontentbymedicinename',views.contentbymedicinename),
+    path('getmedicinebycontent',views.medicinebycontent)
+
 ]
