@@ -115,22 +115,8 @@ export default function Home() {
             
               {!medicine_list_pe && <TobeDisplayed />}
               {medicine_list_pe}
-
-           
-
-
-            
-              {!medicine_list_1mg && <TobeDisplayed />}
               {medicine_list_1mg}
-            
-
-
-           
-              {!medicine_list_nm && <TobeDisplayed />}
-              {medicine_list_nm}
-
-           
-
+              {medicine_list_nm}           
           </div>
         </div>
       }

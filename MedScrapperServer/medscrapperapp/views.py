@@ -83,15 +83,19 @@ def searchsuggestions(request):
     results = MedicinePharmEasy.objects.filter(name__startswith = medicine_prefix).values('name','id')
 
     for result in results:
+        print(type(result))
+        result["company"] = "pharmeasy"
         medicine_name.append(result)
         
     results = MedicineNetMeds.objects.filter(name__startswith = medicine_prefix).values('name','id')
 
     for result in results:
+        result["company"] = "netmeds"
         medicine_name.append(result)
 
     results = Medicine1mg.objects.filter(name__startswith = medicine_prefix).values('name','id')
     for result in results:
+        result["company"] = "1mg"
         medicine_name.append(result)
     print(medicine_name)
     

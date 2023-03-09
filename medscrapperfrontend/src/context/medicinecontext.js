@@ -1,15 +1,24 @@
 
-const MedicineState = async (medicineName) => {
+const MedicineState = async (medicineName, searchby, company) => {
+  let endpoint = ""
+    console.log(searchby)
+    if(searchby == "name")
+      endpoint = "search"
+    else
+      endpoint = "searchbycontent"
+    
     let headersList = {
         "Accept": "*/*",
         "Content-Type": "application/json"
        }
        
        let bodyContent = JSON.stringify({
-         "name" : medicineName
+         "name" : medicineName,
+         "searchby" : searchby,
+         "website": company
        });
        
-       let response = await fetch("http://127.0.0.1:8000/search", { 
+       let response = await fetch("http://127.0.0.1:8000/" + endpoint, { 
          method: "POST",
          body: bodyContent,
          headers: headersList
@@ -21,7 +30,7 @@ const MedicineState = async (medicineName) => {
     return data
 }
 
-export const MedicineInfo = async (seachquery, site) =>{
+export const MedicineInfo = async (seachquery, site, selected) =>{
  
   
   let headersList = {
@@ -30,7 +39,9 @@ export const MedicineInfo = async (seachquery, site) =>{
    }
    
    let bodyContent = JSON.stringify({
-     "name" : seachquery
+     "name" : seachquery,
+     "website" : site,
+     "selected": selected
    });
    
    let response = await fetch("http://127.0.0.1:8000/" + site, { 
