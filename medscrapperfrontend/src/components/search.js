@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import MedicineState, { MedicineInfo } from '../context/medicinecontext'
+import MedicineState, { MedicineInfo,getcontentbymedicinename } from '../context/medicinecontext'
 import Spinner from './Spinner'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
@@ -52,7 +52,6 @@ function Search(props) {
     }
 
     const handleOnSearch = () => {
-        console.log(input)
         handleOnSelect({ "name": input, "searchby" : searchby, "comapny": company})
     }
 
@@ -74,9 +73,22 @@ function Search(props) {
         if (item.name.length > 1) {
             props.setLoadingMedicine(true)
             let str = item.name;
-            console.log(str)
+
             if(selected)
-            {
+            {   
+
+                // salt synonym request
+                let saltsynonymlist = []
+                getcontentbymedicinename(item.name, company).then((data) => {
+                    return JSON.parse(data)
+                }).then(data => {
+                    saltsynonymlist = data
+                })
+                console.log("salt synonym list")
+                console.log(saltsynonymlist)
+
+
+
                 let comapnylist
                 if(item.comapny == "pharmeasy")
                     comapnylist = ["netmeds", "1mg"]
@@ -90,27 +102,12 @@ function Search(props) {
                 MedicineInfo(item.name, item.comapny, selected).then((str) => {
                     return JSON.parse(str)
                 }).then(data => {
-                    props.setMedicines1mg(data)
+                    props.setMedicinespe(data)
                 })
 
-                // salt synonym request
-                let saltsynonymlist = []
-                MedicineState(item.name, searchby, company).then((data) => {
-                    return JSON.parse(data)
-                }).then(data => {
-                    if(searchby == "content")
-                    {
-                        saltsynonymlist = data
-                    }
-                    else
-                    {
-                        for (let i = 0; i < data.length; i++) {
-                        saltsynonymlist.push(data[i].name)
-                    } 
-                    }
-                })
-                console.log("salt synonym list")
-                console.log(saltsynonymlist)
+                
+
+                // start work from here
 
             }
             else
@@ -125,7 +122,7 @@ function Search(props) {
             MedicineInfo(item.name, 'netmeds').then((str) => {
                 return JSON.parse(str)
             }).then(data => {
-                // props.setMedicinesnm(data)
+                props.setMedicinesnm(data)
 
             })
 
@@ -138,7 +135,6 @@ function Search(props) {
             })
             }
         }
-        console.log(item)
     }
 
     const handleOnFocus = () => {

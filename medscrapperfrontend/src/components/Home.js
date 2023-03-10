@@ -21,6 +21,7 @@ export default function Home() {
     setSubsciption({ medicine_name: currentMedicine.name, email: "", website_name: currentMedicine.website_name })
   }
 
+
   const handleClick = (e) => {
     console.log(subscription.email, subscription.medicine_name, subscription.website_name)
     console.log(subscription)
@@ -70,7 +71,7 @@ export default function Home() {
   return (
     <div>
 
-      <Search setMedicinespe={setMedicinespe} setMedicines1mg={setMedicines1mg} setMedicinesnm={setMedicinesnm} setLoadingMedicine={setLoadingMedicine} style={{ zIndex: 10 }} />
+      <Search  setMedicinespe={setMedicinespe} setMedicines1mg={setMedicines1mg} setMedicinesnm={setMedicinesnm} setLoadingMedicine={setLoadingMedicine} style={{ zIndex: 10 }} />
 
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
         Launch demo modal
