@@ -19,8 +19,11 @@ def get_medicine(content,website) :
     while left < right :
         mid = int((left + right+1)/2)
         tempcontent = content[0:int(mid)]
+       
         result = get_medicine_details(tempcontent,website)
         # print(left,right,mid,len(result))
+        if mid == 1 and len(result) == 0:
+            return []
         if(len(result) >= 1):
             left = mid
         else :
@@ -49,7 +52,7 @@ def get_medicinebycontent(contents,website) :
             else :
                 medicine_dict[medicine.name] = 1
     
-    sorted_medicine_dict = sorted(medicine_dict.items(), key=lambda x:-x[1])
+    sorted_medicine_dict = sorted(medicine_dict.items(), key=lambda x:-x[1])[0:10]
     medicine_details = []
     for medicine in sorted_medicine_dict :
         print(medicine)

@@ -2,31 +2,35 @@ import React from 'react'
 import './Card.css'
 
 export default function MedicineDisplay(props) {
-    const {name, price, imglink, manufacturer, medlink, content, description, website_name} = props.item
+    const {name, price, imglink, manufacturer, medlink, content, description} = props.item
     let badgename = ""
     let badgecolor = ""
     let textcolor = "dark"
-    if(website_name == "pharmeasy")
+   
+    if(medlink.includes("pharmeasy"))
     {
         badgename = "PharmEasy"
         badgecolor = "info"
+        
     }
-    else if(website_name == "netmeds")
+    else if(medlink.includes("netmeds"))
     {
         badgename = "NetMeds"
         badgecolor="success"
         textcolor="white"
+       
     }
     else
     {
         badgename = "TATA 1mg"
          badgecolor = "dark"
          textcolor = "white"
+        
     }
   return (
     // <div className="col-xs-12 col-md-4 bootstrap snippets bootdeys">
     <div className='col-md-4 col-sm-12 position-relative'>
-          <span className = {`badge rounded-pill bg-${badgecolor} text-${textcolor} position-absolute top right-10 z-1 fs-6`}>{website_name}</span>
+          <span className = {`badge rounded-pill bg-${badgecolor} text-${textcolor} position-absolute top right-10 z-1 fs-6`}>{badgename}</span>
     <div className='row d-flex justify-content-center'>
     <div className="col-11 product-content product-wrap clearfix" >
            

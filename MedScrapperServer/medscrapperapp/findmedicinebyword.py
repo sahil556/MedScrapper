@@ -1,6 +1,8 @@
 from medscrapperapp.pharmeasy_models import MedicinePharmEasy
 from medscrapperapp.netmeds_models import MedicineNetMeds
 from medscrapperapp.onemg_models import Medicine1mg
+from django.forms.models import model_to_dict
+
 
 def get_medicine_details(name1,website):
     if website == "onemg" :
@@ -33,7 +35,9 @@ def get_medicine(name,website) :
     else :
         result = MedicinePharmEasy.objects.filter(name__icontains = tempname)
     print("From Pharmeasy", len(result),result)
+    medicine_details = []
     for res in result :
-        print(res.name)
-    return result
+        medicine_details.append(model_to_dict(res))
+
+    return medicine_details
     

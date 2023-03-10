@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import MedicineState, { MedicineInfo,getcontentbymedicinename } from '../context/medicinecontext'
+import MedicineState, { MedicineInfo,getcontentbymedicinename, getmedicinebycontent } from '../context/medicinecontext'
 import Spinner from './Spinner'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
@@ -74,66 +74,36 @@ function Search(props) {
             props.setLoadingMedicine(true)
             let str = item.name;
 
-            if(selected)
-            {   
+        
 
-                // salt synonym request
-                let saltsynonymlist = []
-                getcontentbymedicinename(item.name, company).then((data) => {
-                    return JSON.parse(data)
-                }).then(data => {
-                    saltsynonymlist = data
-                })
-                console.log("salt synonym list")
-                console.log(saltsynonymlist)
-
-
-
-                let comapnylist
-                if(item.comapny == "pharmeasy")
-                    comapnylist = ["netmeds", "1mg"]
-                else if(item.comapny == "netmeds")
-                    comapnylist = ["pharmeasy, 1mg"]
-                else
-                    comapnylist = ["netmeds", "pharmeasy"]
-                
-                console.log(comapnylist)
-
-                MedicineInfo(item.name, item.comapny, selected).then((str) => {
-                    return JSON.parse(str)
-                }).then(data => {
-                    props.setMedicinespe(data)
-                })
-
-                
-
-                // start work from here
-
-            }
-            else
-            {
-
-            MedicineInfo(item.name, '1mg').then((str) => {
+            MedicineInfo(item.name, '1mg', selected, searchby).then((str) => {
                 return JSON.parse(str)
             }).then(data => {
                 props.setMedicines1mg(data)
+                console.log("tata 1mg")
+                console.log(data)
             })
 
-            MedicineInfo(item.name, 'netmeds').then((str) => {
+            MedicineInfo(item.name, 'netmeds', selected, searchby).then((str) => {
                 return JSON.parse(str)
             }).then(data => {
                 props.setMedicinesnm(data)
+                console.log("netmeds")
+                console.log(data)
 
             })
 
-            MedicineInfo(item.name, 'pharmeasy').then((str) => {
+            MedicineInfo(item.name, 'pharmeasy',selected, searchby).then((str) => {
                 return JSON.parse(str)
             }).then(data => {
                 props.setMedicinespe(data)
                 props.setLoadingMedicine(false)
+                console.log("pharmeasy  ")
+                console.log(data)
+                setSelected(false)
 
             })
-            }
+            
         }
     }
 

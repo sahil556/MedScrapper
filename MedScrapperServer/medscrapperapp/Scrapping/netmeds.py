@@ -2,10 +2,14 @@ from django.forms.models import model_to_dict
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from medscrapperapp.netmeds_models import MedicineNetMeds
+from medscrapperapp.getmedicinebycontent import get_medicinebycontent
+from medscrapperapp.findmedicinebyword import get_medicine
+from medscrapperapp.findcontentbymedicinename import findContentByMedicineName
 import json
 import re
 
-def scrap_netmeds(medicine_name) :
+def scrap_netmeds(data) :
+    medicine_name = data["name"]
     terminate  = 5
     available_searched_medicine_model = []
     available_searched_medicine_netmeds = []
@@ -123,9 +127,18 @@ def scrap_netmeds(medicine_name) :
         print(inst.args)     # arguments stored in .args
         print(inst) 
         try :
+            if(data["searchby"] == "content"):
+                content = []
+                content.append(data["name"])
+                return json.dumps(get_medicinebycontent(content,data['website']))
+            elif(data["selected"] == False):
+                return json.dumps(get_medicine(data['name'], data['website']))
+            elif(data["website"] != "netmeds"):
+                # find salt synonyms
+                contents = findContentByMedicineName(data["name"], data["website"])
+                return json.dumps(get_medicinebycontent(contents,data['website']))
             saltsynonyms = MedicineNetMeds.objects.get(name = medicine_name).content 
            
-            
             singleContent = saltsynonyms
             print(singleContent)
             medicine_dict = {} 

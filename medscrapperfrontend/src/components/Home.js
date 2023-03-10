@@ -110,8 +110,7 @@ export default function Home() {
       </div>
       {!loadingMedicine &&
         <div className='container mt-5'>
-          {/* <div className='row'>
-          <div className='col-4'> */}
+          
           <div className='row'>
             
               {!medicine_list_pe && <TobeDisplayed />}
@@ -121,20 +120,7 @@ export default function Home() {
           </div>
         </div>
       }
-      {/*<div className='col-4'>
-          <div className='row'>
-
-          </div>
-        </div>
-        <div className='col-4'>
-          <div className='row'>
-
-          </div>
-        </div>
-       
-        </div>
-      </div> */}
-
+     
     </div >
   )
 }

@@ -30,7 +30,7 @@ const MedicineState = async (medicineName, searchby, company) => {
     return data
 }
 
-export const MedicineInfo = async (seachquery, site, selected) =>{
+export const MedicineInfo = async (seachquery, site, selected, searchby) =>{
  
   
   let headersList = {
@@ -41,7 +41,8 @@ export const MedicineInfo = async (seachquery, site, selected) =>{
    let bodyContent = JSON.stringify({
      "name" : seachquery,
      "website" : site,
-     "selected": selected
+     "selected": selected,
+     "searchby" : searchby
    });
    
    let response = await fetch("http://127.0.0.1:8000/" + site, { 
