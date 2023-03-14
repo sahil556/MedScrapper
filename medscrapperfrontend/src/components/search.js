@@ -121,7 +121,7 @@ function Search(props) {
 
     return (
         <>
-
+            <div className='container'>
             <div className="App d-flex p-4 justify-content-center" style={{ position: 'relative' }} >
                 <div style={{ width: 400, position: 'absolute', zIndex: 1, marginTop: '7px', marginLeft:'-100px' }}>
                     <div className="form-check form-switch" style={{"height": "2rem", "width":"calc(3rem + 0.75rem)"}}>
@@ -144,7 +144,7 @@ function Search(props) {
                 {/* </header> */}
 
             </div>
-
+            </div>
             {loading && <Spinner />}
         </>
     )

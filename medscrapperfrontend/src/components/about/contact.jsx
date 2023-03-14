@@ -133,18 +133,18 @@ export const Contact = (props) => {
               <div className="social">
                 <ul>
                   <li>
-                    <a href={props.data ? props.data.facebook : "/"}>
-                      <i className="fa fa-facebook"></i>
+                    <a href="https://in.linkedin.com/in/sahil-nandaniya-8b3978204" target={"_blank"}>
+                      <i className="fa fa-linkedin"></i>
                     </a>
                   </li>
                   <li>
-                    <a href={props.data ? props.data.twitter : "/"}>
-                      <i className="fa fa-twitter"></i>
+                    <a href="https://in.linkedin.com/in/hemanshu-faldu-54a732207" target={"_blank"}>
+                      <i className="fa fa-linkedin"></i>
                     </a>
                   </li>
                   <li>
-                    <a href={props.data ? props.data.youtube : "/"}>
-                      <i className="fa fa-youtube"></i>
+                    <a href="https://in.linkedin.com/in/harshad-javiya-90aa20209" target="_blank">
+                      <i className="fa fa-linkedin"></i>
                     </a>
                   </li>
                 </ul>
