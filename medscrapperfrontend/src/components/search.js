@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import MedicineState, { MedicineInfo } from '../context/medicinecontext'
+import MedicineState, { MedicineInfo,getcontentbymedicinename, getmedicinebycontent } from '../context/medicinecontext'
 import Spinner from './Spinner'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
@@ -52,7 +52,6 @@ function Search(props) {
     }
 
     const handleOnSearch = () => {
-        console.log(input)
         handleOnSelect({ "name": input, "searchby" : searchby, "comapny": company})
     }
 
@@ -74,71 +73,38 @@ function Search(props) {
         if (item.name.length > 1) {
             props.setLoadingMedicine(true)
             let str = item.name;
-            console.log(str)
-            if(selected)
-            {
-                let comapnylist
-                if(item.comapny == "pharmeasy")
-                    comapnylist = ["netmeds", "1mg"]
-                else if(item.comapny == "netmeds")
-                    comapnylist = ["pharmeasy, 1mg"]
-                else
-                    comapnylist = ["netmeds", "pharmeasy"]
-                
-                console.log(comapnylist)
 
-                MedicineInfo(item.name, item.comapny, selected).then((str) => {
-                    return JSON.parse(str)
-                }).then(data => {
-                    props.setMedicines1mg(data)
-                })
+        
 
-                // salt synonym request
-                let saltsynonymlist = []
-                MedicineState(item.name, searchby, company).then((data) => {
-                    return JSON.parse(data)
-                }).then(data => {
-                    if(searchby == "content")
-                    {
-                        saltsynonymlist = data
-                    }
-                    else
-                    {
-                        for (let i = 0; i < data.length; i++) {
-                        saltsynonymlist.push(data[i].name)
-                    } 
-                    }
-                })
-                console.log("salt synonym list")
-                console.log(saltsynonymlist)
-
-            }
-            else
-            {
-
-            MedicineInfo(item.name, '1mg').then((str) => {
+            MedicineInfo(item.name, '1mg', selected, searchby).then((str) => {
                 return JSON.parse(str)
             }).then(data => {
                 props.setMedicines1mg(data)
+                console.log("tata 1mg")
+                console.log(data)
             })
 
-            MedicineInfo(item.name, 'netmeds').then((str) => {
+            MedicineInfo(item.name, 'netmeds', selected, searchby).then((str) => {
                 return JSON.parse(str)
             }).then(data => {
-                // props.setMedicinesnm(data)
+                props.setMedicinesnm(data)
+                console.log("netmeds")
+                console.log(data)
 
             })
 
-            MedicineInfo(item.name, 'pharmeasy').then((str) => {
+            MedicineInfo(item.name, 'pharmeasy',selected, searchby).then((str) => {
                 return JSON.parse(str)
             }).then(data => {
                 props.setMedicinespe(data)
                 props.setLoadingMedicine(false)
+                console.log("pharmeasy  ")
+                console.log(data)
+                setSelected(false)
 
             })
-            }
+            
         }
-        console.log(item)
     }
 
     const handleOnFocus = () => {
@@ -155,7 +121,7 @@ function Search(props) {
 
     return (
         <>
-
+            <div className='container'>
             <div className="App d-flex p-4 justify-content-center" style={{ position: 'relative' }} >
                 <div style={{ width: 400, position: 'absolute', zIndex: 1, marginTop: '7px', marginLeft:'-100px' }}>
                     <div className="form-check form-switch" style={{"height": "2rem", "width":"calc(3rem + 0.75rem)"}}>
@@ -178,7 +144,7 @@ function Search(props) {
                 {/* </header> */}
 
             </div>
-
+            </div>
             {loading && <Spinner />}
         </>
     )

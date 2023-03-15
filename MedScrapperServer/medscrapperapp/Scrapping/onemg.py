@@ -1,10 +1,15 @@
 from django.forms.models import model_to_dict
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
+import json
 from medscrapperapp.onemg_models import Medicine1mg
+from medscrapperapp.getmedicinebycontent import get_medicinebycontent
+from medscrapperapp.findmedicinebyword import get_medicine
+from medscrapperapp.findcontentbymedicinename import findContentByMedicineName
 
 undef = 0
-def scrap_1mg(medicine_name) :
+def scrap_1mg(data) :
+    medicine_name = data["name"]
     terminate = 1
     medicine_details = []
     medicine_details_for_save = []
@@ -49,7 +54,8 @@ def scrap_1mg(medicine_name) :
                 else :
                     details_link_drugs.append("https://www.1mg.com" + link['href'])
             itr = 0
-            terminate = len(details_link_drugs) + len(details_link_otc)
+            # terminate = len(details_link_drugs) + len(details_link_otc)
+            terminate = 5
             for link in details_link_drugs :
                 itr = itr +1
                 medicine  = Medicine1mg()
@@ -133,7 +139,7 @@ def scrap_1mg(medicine_name) :
                 print(itr, " Done",terminate )
                 if itr == terminate :
                     break
-
+            ite = 1
             for link in details_link_otc :
                 print(link)
                 itr = itr +1
@@ -268,6 +274,17 @@ def scrap_1mg(medicine_name) :
         print(inst.args)     # arguments stored in .args
         print(inst) 
         try :
+            if(data["searchby"] == "content"):
+                content = []
+                content.append(data["name"])
+                return get_medicinebycontent(content,data['website'])
+            elif(data["selected"] == False):
+                return (get_medicine(data['name'], data['website']))
+            elif(data["website"] != "1mg"):
+                # find salt synonyms
+                contents = findContentByMedicineName(data["name"], data["website"])
+                print(contents)
+                return (get_medicinebycontent(contents,data['website']))
             medicine = Medicine1mg.objects.filter(name = medicine_name)
             print(len(medicine))
             saltsynonyms = ""

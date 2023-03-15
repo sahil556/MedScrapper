@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import Search from './Search'
 import { addSubscription } from '../context/medicinecontext'
 import MedicineDisplay from './MedicineDisplay'
-import TobeDisplayed from './TobeDisplayed'
+import Disclaimer from './Disclaimer'
 
 
 export default function Home() {
@@ -20,6 +20,7 @@ export default function Home() {
     ref.current.click();
     setSubsciption({ medicine_name: currentMedicine.name, email: "", website_name: currentMedicine.website_name })
   }
+
 
   const handleClick = (e) => {
     console.log(subscription.email, subscription.medicine_name, subscription.website_name)
@@ -39,7 +40,7 @@ export default function Home() {
   let medicine_list_1mg, medicine_list_nm, medicine_list_pe
   try {
     if (medicines1mg != null) {
-      if (medicines1mg.length > 0 ) {
+      if (medicines1mg.length > 0) {
         medicine_list_1mg = medicines1mg.map((item) => {
           item.website_name = '1mg'
           return <MedicineDisplay key={item.id} item={item} Notifyme={Notifyme} />
@@ -70,8 +71,9 @@ export default function Home() {
   return (
     <div>
 
+<div className='container'>
       <Search setMedicinespe={setMedicinespe} setMedicines1mg={setMedicines1mg} setMedicinesnm={setMedicinesnm} setLoadingMedicine={setLoadingMedicine} style={{ zIndex: 10 }} />
-
+</div>
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
         Launch demo modal
       </button>
@@ -107,34 +109,66 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {!loadingMedicine &&
-        <div className='container mt-5'>
-          {/* <div className='row'>
-          <div className='col-4'> */}
-          <div className='row'>
-            
-              {!medicine_list_pe && <TobeDisplayed />}
+
+
+      <div className='container my-3 mt-5'>
+
+        <div className='row'>
+
+          {loadingMedicine && <Disclaimer />}
+          {!loadingMedicine && medicine_list_pe == undefined&&
+            <div>
+              <div className="jumbotron mt-4" style={{ backgroundColor: "#ccffe5" }}>
+                <h1 style={{ fontFamily: "serif" }}>Welcome to our Medicine WebScapping Store</h1>
+                <p style={{ fontFamily: "fantasy" }}>Find the medications you need at affordable prices.</p>
+                <a className="btn btn-outline-dark btn-lg" to="#" style={{textDecoration:"none"}} role="button">Browse Medicine</a>
+              </div>
+              <div className="container">
+                <h3>Featured Results</h3>
+                <div className="row">
+                  <div className="col-sm-4">
+                    <div className="card">
+                      <img src="https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/mu5bahqxfrp28cut6que.jpg" className="card-img-top" alt="..." />
+                      <div className="card-body">
+                        <h5 className="card-title"><b>Dolo 650 Tablet</b></h5>
+                        <p className="card-text"><b>₹25</b><br/>Dolo 650 Tablet helps relieve pain and fever by blocking the release of certain chemical messengers responsible for fever and pain....</p>
+                        <a href="https://www.1mg.com/drugs/dolo-650-tablet-74467" target={"_blank"} style={{textDecoration:"none"}} className="btn btn-outline-dark">Know More</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-sm-4">
+                    <div className="card">
+                      <img style={{height: "250px"}} src="https://cdn01.pharmeasy.in/dam/products/I43006/crocin-650mg-advance-tab-15s-2-1641538269.jpg?dim=350x200&dpr=1&q=100" className="card-img-top" alt="crosin img" />
+                      <div className="card-body">
+                        <h5 className="card-title"><b>Crocin 650mg Advance Tablets 15'S</b></h5>
+                        <p className="card-text"><b>₹29.13</b><br/>Crocin 650 Advance tablet is a pain-relieving medicine. It contains paracetamol as an active ingredient...</p>
+                        <a href="https://pharmeasy.in/online-medicine-order/crocin-650mg-advance-tab-15-s-217263" target={"_blank"} style={{textDecoration:"none"}} className="btn btn-outline-dark">Know More</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-sm-4">
+                    <div className="card">
+                      <img style={{height: "250px"}}  src="https://www.netmeds.com/images/product-v1/600x600/369491/azifast_250mg_tablet_6_s_0.jpg" className="card-img-top" alt="..." />
+                      <div className="card-body">
+                        <h5 className="card-title"><b>Azifast 250mg Tablet 6'S</b></h5>
+                        <p className="card-text"><b>₹ 55.86</b> <br/>Azifast is used to treat mild to moderate susceptible infections caused by bacteria and micro-organisms which includes chest, ...</p>
+                        <a href="https://www.netmeds.com/prescriptions/azifast-250mg-tablet-6-s" target={'_blank'} style={{textDecoration:"none"}} className="btn btn-outline-dark">Know More</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div />
+              </div>
+              </div>
+              }
               {medicine_list_pe}
               {medicine_list_1mg}
-              {medicine_list_nm}           
-          </div>
+              {medicine_list_nm}
+            </div>
         </div>
-      }
-      {/*<div className='col-4'>
-          <div className='row'>
 
-          </div>
-        </div>
-        <div className='col-4'>
-          <div className='row'>
 
-          </div>
-        </div>
-       
-        </div>
-      </div> */}
-
-    </div >
-  )
+      </div >
+      )
 }
 
