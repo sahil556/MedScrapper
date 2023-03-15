@@ -6,6 +6,7 @@ import About from './components/About';
 import ViewSubscription from './components/ViewSubscription';
 import { useState } from 'react';
 import { useRef } from 'react';
+import Test from './components/Test';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/" element={<><Home/></>} />
           <Route exact path="/view/subscription" element={<><ViewSubscription/></>} />
           <Route exact path="/about" element={<><About /></>} />
+          <Route exact path="/test" element={<><Test /></>} />
         </Routes>
       </BrowserRouter>
     </>
