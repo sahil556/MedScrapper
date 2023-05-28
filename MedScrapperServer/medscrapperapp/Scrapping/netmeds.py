@@ -46,7 +46,7 @@ def scrap_netmeds(data) :
                 page.is_visible("#maincontent > div.content-section > div.product-top > div.product-right-block > div.product-detail > h1")
                 html = page.content()
                 soup = BeautifulSoup (html, 'html.parser')
-                medicine = MedicineNetMeds()
+                medicine = MedicineNetMeds() #why should take object here?
                 medicine_name = soup.find('h1',{'class':'black-txt'}).get_text().lower()
                 price = soup.find('span',class_ = 'final-price').get_text()
                 imgurl = soup.find('figure',{'class':'figure figure-m-0 largeimage'}).find_all('img')[0]['src']
@@ -103,8 +103,9 @@ def scrap_netmeds(data) :
                     saltsynonyms = med_table[index+2].string
 
                 medicine = MedicineNetMeds(name=medicine_name, price = price, imglink = imgurl, content = saltsynonyms, sideeffect = side_effect, manufacturer = manufacturer, howtouse = howtouse,description = description, medlink = medicine_link)
-                
+                # this list used for http response (converting data to json this required)
                 available_searched_medicine_netmeds.append(model_to_dict(medicine))
+                # this list used for saving medicine objects in database
                 available_searched_medicine_model.append(medicine)
 
                 if itr == terminate:
@@ -114,6 +115,8 @@ def scrap_netmeds(data) :
             medcheck  = "NULL"
             print(obj)
             try : 
+                # if medicine object not found then it will raise exception and in that part the object is saved in database
+                # if medicine object found then do nothig (don't save in datase)
                 medcheck = MedicineNetMeds.objects.get(name = obj.name)
             except:
                 print("Added to Database")
@@ -128,15 +131,20 @@ def scrap_netmeds(data) :
         print(inst) 
         try :
             if(data["searchby"] == "content"):
+                # search by content not medicine name 
                 content = []
                 content.append(data["name"])
                 return json.dumps(get_medicinebycontent(content,data['website']))
             elif(data["selected"] == False):
+                # medicine name is written by user not selected from suggestion list
                 return json.dumps(get_medicine(data['name'], data['website']))
             elif(data["website"] != "netmeds"):
+                # medicine name is taken from suggestion list but that name is not exist in netmeds 
                 # find salt synonyms
                 contents = findContentByMedicineName(data["name"], data["website"])
                 return json.dumps(get_medicinebycontent(contents,data['website']))
+            
+            # other case that medicine name is taken from suggestion list and that medicine is belongs to netmeds table
             saltsynonyms = MedicineNetMeds.objects.get(name = medicine_name).content 
            
             singleContent = saltsynonyms

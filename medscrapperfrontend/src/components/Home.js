@@ -120,7 +120,7 @@ export default function Home() {
             <div>
               <div className="jumbotron mt-4" style={{ backgroundColor: "#ccffe5" }}>
                 <h1 style={{ fontFamily: "serif" }}>Welcome to our Medicine WebScapping Store</h1>
-                <p style={{ fontFamily: "fantasy" }}>Find the medications you need at affordable prices.</p>
+                <p style={{ fontFamily: "sans-serif" }}>Find the medications you need at affordable prices.</p>
                 <a className="btn btn-outline-dark btn-lg" to="#" style={{textDecoration:"none"}} role="button">Browse Medicine</a>
               </div>
               <div className="container">

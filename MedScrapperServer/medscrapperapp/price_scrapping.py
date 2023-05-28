@@ -46,6 +46,7 @@ def get_price_1mg(url) :
                 return price
     
 def get_price_netmeds(url) :
+      #will it scrap again?
       with sync_playwright () as p:
             browser = p.chromium.launch(headless=False)
             page = browser.new_page()
